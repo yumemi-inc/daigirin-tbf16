@@ -1,0 +1,26 @@
+{
+  "name": "daigirin-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:yumemi/daigirin-template.git",
+  "author": "YUMEMI Inc",
+  "license": "MIT",
+  "scripts": {
+    "lint": "textlint ./book/manuscripts/",
+    "start": "run-s build open",
+    "build": "cd ./book/ && vivliostyle build",
+    "build:press": "cd ./book/ && vivliostyle build --preflight press-ready-local --preflight-option gray-scale --style ./theme/theme-press.css --output ./output/press.pdf",
+    "open": "open ./book/output/ebook.pdf",
+    "clean": "rm -rf ./book/output/"
+  },
+  "devDependencies": {
+    "@vivliostyle/cli": "^8.9.1",
+    "npm-run-all2": "^6.0.0",
+    "textlint": "^14.0.0",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-rule-preset-ja-spacing": "^2.3.0",
+    "textlint-rule-preset-ja-technical-writing": "^10.0.0",
+    "textlint-rule-prh": "^6.0.0",
+    "textlint-rule-spellcheck-tech-word": "^5.0.0"
+  }
+}

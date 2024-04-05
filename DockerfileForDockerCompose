@@ -1,5 +1,5 @@
 FROM node:20-alpine
-WORKDIR /workspaces/daigirin-template
+WORKDIR /workspaces/daigirin-tbf16
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile && yarn cache clean

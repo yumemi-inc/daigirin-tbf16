@@ -7,7 +7,7 @@ services:
       dockerfile: DockerfileForDockerCompose
     image: ${TEXT_LINT_IMAGE_NAME}:${TEXT_LINT_IMAGE_TAG}
     volumes:
-      - .:/workspaces/daigirin-template
-      - /workspaces/daigirin-template/node_modules
-    working_dir: /workspaces/daigirin-template
+      - .:/workspaces/daigirin-tbf16
+      - /workspaces/daigirin-tbf16/node_modules
+    working_dir: /workspaces/daigirin-tbf16
     command: yarn lint

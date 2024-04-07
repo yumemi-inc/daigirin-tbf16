@@ -2,7 +2,7 @@
   "name": "daigirin-tbf16",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:yumemi/daigirin-tbf16.git",
+  "repository": "git@github.com:yumemi-inc/daigirin-tbf16.git",
   "author": "YUMEMI Inc",
   "license": "MIT",
   "scripts": {

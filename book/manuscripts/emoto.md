@@ -16,7 +16,7 @@ iOSにおける非同期型イベント駆動
 :::
 -->
 
-イベントに合わせて処理を実行したい、たとえばボタンタップのタイミングで処理を実行する場合は、次のようなコードを書けば実現できます（SwiftUI を使った例です）。
+iOS アプリの開発において、あるイベントに合わせて処理を実行したい、たとえばボタンタップのタイミングで処理を実行したい場合は、次のようなコードを書けば実現できます。
 
 ```swift
 Button("Sign in") {
@@ -102,7 +102,9 @@ eventAction.observeHandler = { eventMessage in
 
 ## NotificationCenter
 
-おそらく非同期の発行と購読でもっとも簡単なのは NotificationCenter の利用です。このイベント用の Notification.Name を作成して、それを利用してイベントを発行します。
+非同期の発行と購読をもっとも簡単に実現できる手法は NotificationCenter の利用でしょう。この NotificationCenter は iOS 2 からと昔からあり、アプリ内通知の送受信を制御できます。アプリに端末の起動状態などを通知したり、アプリ内の異なるオブジェクト間でデータのやりとりなどに利用されています。
+
+通知を送信するには、通知を識別する名前 Notification.Name を作成して、その名前を付けて送信します。これを利用して、イベントを発行します。
 
 ```swift
 extension Notification.Name {
@@ -117,7 +119,7 @@ func put(message: EventMessage) {
 }
 ```
 
-発行されたイベントは addObserver で購読でき、イベントを受け取った時に実行する関数を指定します。この購読は同じ Notification.Name を指定すれば、他のクラスでも利用できます。ただし、その自由度の高さから、さまざまな場所で利用するとデバッグや検証が難しくなります。多用する場合は注意が必要です。
+発行されたイベントは addObserver で購読します。さらに、イベントを受け取った時に実行する関数を指定します。この購読は同じ Notification.Name を指定すれば、他のクラスでも利用できます。ただし、その自由度の高さからさまざまな場所で利用すると、デバッグや検証が難しくなります。多用する場合は注意が必要です。
 
 ```swift
 NotificationCenter.default.addObserver(
@@ -135,7 +137,7 @@ NotificationCenter.default.addObserver(
 }
 ```
 
-設定した購読は、監視が不要になったとき、インスタンスを解放するときなどに、忘れずに解除します。購読解除を忘れると、メモリリークや予期しない動作など、さまざまな不具合を引き起こします。
+設定した購読が不要になったとき、対象のインスタンスを解放するときなどは、忘れずに購読を解除します。購読解除を忘れると、メモリリークや予期しない動作など、さまざまな不具合を引き起こします。
 
 ```swift
 NotificationCenter.default.removeObserver(
@@ -145,11 +147,11 @@ NotificationCenter.default.removeObserver(
 )
 ```
 
-NotificationCenter はとても簡単に非同期なイベント処理を実装できます。その反面、過度に利用すると、パフォーマンスへの影響や、アーキテクチャを乱す可能性があります。適切な場面で利用して、オブジェクトの明確な設計を維持することが大切です。
+NotificationCenter はとても簡単に非同期なイベント処理を実装できます。その反面、過度に利用すると、パフォーマンスへの悪影響や、アーキテクチャを乱す場合があります。適切な場面で利用して、明確な設計を維持することが大切です。
 
 ## Combine
 
-Combine は iOS 13 から追加された非同期処理などの多機能なリアクティブプログラミングのためのフレームワークです。Combine には発行と購読にいくつかの方法がありますが、簡単な例を紹介します。
+Combine は iOS 13 から追加された非同期処理など多機能なリアクティブプログラミングのためのフレームワークです。Combine には発行と購読にいくつかの方法がありますが、簡単な例を紹介します。
 
 データの発行は次のように作成できます。
 
@@ -163,7 +165,7 @@ func put(message: EventMessage) {
 }
 ```
 
-購読は発行した subject に対して設定します。この subject を public などにすれば、他クラスでも購読を受け取ることもできます。１つの発行に対して、購読は複数設定できます。
+購読は発行した subject に対して設定します。この subject を public などにすれば、他クラスでも購読ができます。１つの発行に対して、購読は複数設定できます。
 
 ```swift
 // 購読を格納しておく配列
@@ -175,7 +177,7 @@ subject.sink { [weak self] in
 }.store(in: &subscriptions)
 ```
 
-先節と同様に Combine にも購読解除があります。忘れずに、解除します。
+先節と同様に Combine にも購読解除があります。忘れずに、解除しましょう。
 
 ```swift
 subscriptions.forEach { $0.cancel() }
@@ -215,10 +217,10 @@ func observe() async -> Void {
 
 withCheckedContinuation はクロージャを非同期関数に変換できる便利な関数です。しかしながら、手間もあります。
 
-- クロージャで完了処理を行う関数を作る
+- クロージャで完了処理を実行する関数を作る
 - その関数を withCheckedContinuation でラッピングする
 
-この Combine の非同期関数への変換は、iOS 15 から Combine に追加された Future クラスのプロパティ value を利用すると、より簡単に変換できます。
+この Combine の async/await への変換は、iOS 15 から Combine に追加された Future クラスのプロパティ value を利用すると、より簡単に変換できます。
 
 ```swift
 var subscriptions = [AnyCancellable]()
@@ -244,7 +246,7 @@ func observe() async -> Void {
 
 前節で Combine を非同期関数に置き換えました。簡単に置き換えられるとはいえ、置換なしで使いたいですよね。
 
-Swift Concurrency と聞くと async/await を思い浮かべる方が多いでしょう。しかし、ストリームを扱うができる AsyncStream も提供されています。
+Swift Concurrency と聞くと async/await を思い浮かべる方が多いでしょう。しかし、ストリームを扱うができる AsyncStream も提供されています。次のようなコードで AsyncStream を実装できます。
 
 ```swift
 // AsyncStream の内部で continuation を発火させるための関数
@@ -272,7 +274,7 @@ for await value in stream {
 
 ## Swift Concurrency（iOS 17+）
 
-前節の AsyncStream は、その内部関数を発火させる関数（コード例の handler にあたる関数）を外部で定義したりと、正直なところカッコ悪いです。そのためなのか、iOS 17 からより簡単にストリームを定義できる AsyncStream.makeStream が追加されました。この関数は iOS 17 以上にすると、iOS 13 以上の環境にもバックデプロイされるので、幅広い環境で利用できます。次のように、コード量も少なくなり、とても簡単になりました。
+前節の AsyncStream は、その内部関数を発火させる関数（コード例の handler）を外部で定義したりと、正直なところカッコ悪いです。そのためなのか、iOS 17 からより簡単にストリームを定義できる AsyncStream.makeStream が追加されました。この関数は iOS 17 以上にすると、iOS 13 以上の環境にもバックデプロイされるので、幅広い環境で利用できます。次のように、コード量も少なくなり、とても簡単になりました。
 
 ```swift
 // ストリームを作成する
@@ -289,7 +291,7 @@ for await value in stream {
 }
 ```
 
-ソースコードを見てのとおり、Swift Concurrency の発行と購読は対になっています。これまで取り上げた NotificationCenter や Combine の発行と購読は１対多にできます。Swift Concurrency が作るストリームは、既存のストリームを置き換えるものではなく、別物として考えるのがよいです。
+ソースコードを見てのとおり、Swift Concurrency の発行と購読は対になっています。一方で NotificationCenter や Combine の発行と購読は１対多に設定できます。Swift Concurrency が作るストリームは、既存のストリームを置き換えるものではなく、別物として考えるのがよいです。
 
 ## まとめ
 
@@ -307,9 +309,7 @@ https://github.com/mitsuharu/ReSwift-Saga
 https://github.com/mitsuharu/EventDrivenSample
 ```
 
-<!--
 <hr class="page-break" />
--->
 
 ## Qiita 記事の案内
 

@@ -316,7 +316,7 @@ https://github.com/mitsuharu/EventDrivenSample
 本記事は Qiita でも読むことができます。後述の URL または QR コードからアクセスしてください。加筆や修正などがある場合は Qiita 記事で対応しますのでご確認ください。また、ご質問等があれば、お気軽にコメントしてください。
 
 ```url
-https://qiita.com/mitsuharu_e/items/xxx
+https://qiita.com/mitsuharu_e/items/e82df4e5cd94fdff8e07
 ```
 
-![記事のQRコード](./images_emoto/qr-code.png "記事のQRコード")
+![記事のQRコード](./images_emoto/qr-code.jpg "記事のQRコード")

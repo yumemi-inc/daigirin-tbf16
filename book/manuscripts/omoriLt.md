@@ -15,11 +15,11 @@ class: content
 
 <img width=100% src="./omori/lt_top.png">
 
-PHPerKaigi2024, PHP カンファレンス関西 2024, BuriKaigi 2024 で LT や登壇しました。
+PHPerKaigi2024, PHP カンファレンス関西 2024, BuriKaigi 2024 などで LT や登壇しました。
 
-[speakerdeck.com/ohmori_yusuke](https://speakerdeck.com/ohmori_yusuke)
+<ins>[speakerdeck.com/ohmori_yusuke](https://speakerdeck.com/ohmori_yusuke)</ins>
 
-Speaker Deck にすべての資料があるので、もしよろしければ見てください。
+他にも様々な勉強会で LT しています。Speaker Deck にすべての資料があるので、もしよろしければ見てください。
 
 ## LT とはなんぞ？
 
@@ -45,7 +45,7 @@ Speaker Deck にすべての資料があるので、もしよろしければ見�
 
 ### 「30 点で打席に立つ」
 
-[speakerdeck.com/konifar/30dian-deda-xi-nili-tu](https://speakerdeck.com/konifar/30dian-deda-xi-nili-tu)
+<ins>[speakerdeck.com/konifar/30dian-deda-xi-nili-tu](https://speakerdeck.com/konifar/30dian-deda-xi-nili-tu)</ins>
 
 100 点にするまで我慢してたら、ずっとアウトプットできず「知的な便秘」になってしまいます。何回も打席に立って点数を上げていけばいいと思います。打席に立つことで課題や楽しいことも分かってきます。
 
@@ -77,7 +77,7 @@ LT のような短時間で発表する場合、テーマを絞った方がい�
 
 発表のタイトルの付け方は以下のスライドを参考にすると無難だと思います。
 
-[speakerdeck.com/tomzoh/how-to-hack-the-cfp](https://speakerdeck.com/tomzoh/how-to-hack-the-cfp)
+<ins>[speakerdeck.com/tomzoh/how-to-hack-the-cfp](https://speakerdeck.com/tomzoh/how-to-hack-the-cfp)</ins>
 
 私のタイトルの決め方
 
@@ -88,9 +88,9 @@ LT のような短時間で発表する場合、テーマを絞った方がい�
 以下のスライドを見て真似するのもいいと思います。
 
 PHPerKaigi2019 スライドまとめ |
-[qiita.com/ucan-lab/items/eb66ae31d4859e967fa5](https://qiita.com/ucan-lab/items/eb66ae31d4859e967fa5)
+<ins>[qiita.com/ucan-lab/items/eb66ae31d4859e967fa5](https://qiita.com/ucan-lab/items/eb66ae31d4859e967fa5)</ins>
 
-iOSDC 2023 セッション資料まとめ | [qiita.com/yuukiw00w/items/4a8c67a21618fd4626fc](https://qiita.com/yuukiw00w/items/4a8c67a21618fd4626fc)
+iOSDC 2023 セッション資料まとめ | <ins>[qiita.com/yuukiw00w/items/4a8c67a21618fd4626fc](https://qiita.com/yuukiw00w/items/4a8c67a21618fd4626fc)</ins>
 
 ## よくある質問
 
@@ -108,19 +108,19 @@ iOSDC 2023 セッション資料まとめ | [qiita.com/yuukiw00w/items/4a8c67a21
 
 #### Microsoft PowerPoint
 
-[www.microsoft.com/ja-jp/microsoft-365/powerpoint](https://www.microsoft.com/ja-jp/microsoft-365/powerpoint)
+<ins>[www.microsoft.com/ja-jp/microsoft-365/powerpoint](https://www.microsoft.com/ja-jp/microsoft-365/powerpoint)</ins>
 
 安定のツール。便利。
 
 #### Canva
 
-[www.canva.com/ja_jp/features/ai-slide/](https://www.canva.com/ja_jp/features/ai-slide/)
+<ins>[www.canva.com/ja_jp/features/ai-slide/](https://www.canva.com/ja_jp/features/ai-slide/)</ins>
 
 AI にスライドを作ってもらうことができます。AI 機能を使わなくても、綺麗なデザインで作ることができます。
 
-revealjs
+#### revealjs
 
-[revealjs.com](https://revealjs.com/)
+<ins>[revealjs.com](https://revealjs.com/)</ins>
 
 エンジニアらしく、マークダウンでスライドを作成できます。使っている方をたまに見かけます。
 
@@ -159,7 +159,7 @@ revealjs
 
 社外の LT 会でも、マサカリが飛んでくることはあまりありません。(個人的な感想)発表は他者に伝えるためでもありますが、「自身が学ぶため」でもあります。発表やアウトプット、言語化することで未知ことを把握することができたり、理解が浅いということを知ることができます。定期的に言語化することは「あなた自身の学び」になります。
 
-[connpass.com](https://connpass.com/)
+<ins>[connpass.com](https://connpass.com/)</ins>
 
 connpass というサイトで「LT」と検索し、参加してみましょう！最初は視聴者でも参加すると楽しいと思います！参加しているうちに「LT したい…」と思うはずです。
 
@@ -173,4 +173,4 @@ connpass というサイトで「LT」と検索し、参加してみましょう
 
 武蔵野アニメーション所属の最古参のアニメーターの言葉です。いい言葉ですね。
 
-SHIROBAKO はいい話なので観てください。私は「今井みどり」が好きっす！
+SHIROBAKO はいい話なので観てください。私は「<ins>[今井みどり](http://shirobako-anime.com/character-05.html)</ins>」が好きっす！

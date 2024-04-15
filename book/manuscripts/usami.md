@@ -338,3 +338,9 @@ https://github.com/usami-k/daigirin-nannou-2
 ## Qiita 記事の案内
 
 本記事は Qiita でも読むことができます。
+
+```url
+https://qiita.com/usamik26/items/0af0fcd0a9db0523c1b6
+```
+
+![Qiita 記事の URL](./images_usami/qr-code.png)

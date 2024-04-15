@@ -27,27 +27,27 @@ PHPerKaigi2024, PHP カンファレンス関西 2024, BuriKaigi 2024 などで L
 
 引用元 : <cite>IT 業界でよく聞く「LT」ってなんなの？3 つのメリットを知って、きみも LT してみよう！ https://www.wantedly.com/companies/tobila/post_articles/104468</cite>
 
-## はじめに
+## LT をオススメする理由
 
-### 「アウトプットしないのは知的な便秘」
+### 「アウトプットしないのは知的な便秘」だから
 
-という言葉があります。LT やブログ、技術同人誌などで「アウトプット」することで、新しいことを学ぶきっかけになったり、学びが深まったりします。
+「アウトプットしないのは知的な便秘」[^bennpi]という言葉があります。LT やブログ、技術同人誌などで「アウトプット」することで、新しいことを学ぶきっかけになったり、学びが深まったりします。
 
-<img width=100% src="./omori/output_benpi.png">
-
-引用元 : <cite>ssmjp とは https://ssm.pkan.org/ssmjp%E3%81%A8%E3%81%AF/</cite>
+[^bennpi]:
+    #ssmjp とは | ssmjp Infomation |
+    https://ssm.pkan.org/ssmjp%E3%81%A8%E3%81%AF/
 
 学んだことをアウトプット（業務で活用、ブログ書く、LT するなど）しなければ、学びを深めることが困難です。アウトプットすることで、未熟な部分や理解が浅いことを把握できます。把握することが次への学びの第一歩になります。
 
-### 直接感想が貰えて、人とのつながりが広がる
+### 直接感想が貰えて、人とのつながりが広がるから
 
 オフラインの勉強会やカンファレンスの場合は、発表後に直接フィードバックや感想（「発表よかったです！」、「自分も発表したくなりました！」など）をいただけることがあります。感想をもらえることで、また発表したいと思うようになると思います。発表することで、その勉強会で声をかけられることが増えます。これにより、社外でのつながりや知らない技術について興味をもつきっかけにも繋がります。
 
-### 「30 点で打席に立つ」
+### LT は楽しいから
 
-<ins>[speakerdeck.com/konifar/30dian-deda-xi-nili-tu](https://speakerdeck.com/konifar/30dian-deda-xi-nili-tu)</ins>
+LT をして交流することは楽しいです。自己紹介や最近のちょっとした学びを５分間で話してしまいましょう。話すことで情報が整理されます。緊張して「失敗したな…」と思うかもしれませんが、見ている人は大して気にしていないです。あなたが話したいことを話して、視聴者受けはあまり気にせず LT しましょう！意外と刺さる人には刺さっていたりします。
 
-100 点にするまで我慢してたら、ずっとアウトプットできず「知的な便秘」になってしまいます。何回も打席に立って点数を上げていけばいいと思います。打席に立つことで課題や楽しいことも分かってきます。
+## LT をするモチベーション
 
 ### 「聞いてほしい」より「話したい」を大事に
 
@@ -59,9 +59,19 @@ PHPerKaigi2024, PHP カンファレンス関西 2024, BuriKaigi 2024 などで L
 
 せっかくスライドを作って話したのに残念な気持ちになることは避けたいです。そのために、「聞いてほしい」ではなく「話したい」という思いを大事にしています。
 
-### LT は楽しい
+### まずは「30 点で打席に立つ」
 
-LT をして交流することは楽しいです。自己紹介や最近のちょっとした学びを５分間で話してしまいましょう。話すことで情報が整理されます。緊張して「失敗したな…」と思うかもしれませんが、見ている人は大して気にしていないです。あなたが話したいことを話して、視聴者受けはあまり気にせず LT しましょう！意外と刺さる人には刺さっていたりします。
+konifar さんが“めもりーさんと語る Findy Engineer Lab オフ会＠東京 LT [^konifar-connpass] ” で発表されたスライド[^konifar-slide]には「30 点で打席に立つ」ということについて書かれています。
+
+[^konifar-connpass]:
+    めもりーさんと語る Findy Engineer Lab オフ会＠東京 - connpass |
+    https://findy.connpass.com/event/294069/
+
+[^konifar-slide]:
+    30 点で打席に立つ - Speaker Deck |
+    https://speakerdeck.com/konifar/30dian-deda-xi-nili-tu
+
+100 点にするまで我慢していると、ずっとアウトプットできず「知的な便秘」になってしまいます。何回も打席に立って点数を上げていけばいいと思います。打席に立つことで課題や楽しいことも分かってきます。
 
 ## 少しでも LT に興味を持った方へ
 
@@ -75,9 +85,11 @@ LT のような短時間で発表する場合、テーマを絞った方がい�
 
 ### タイトルの決め方は？
 
-発表のタイトルの付け方は以下のスライドを参考にすると無難だと思います。
+発表のタイトルの付け方は複数のカンファレンスを主催されている長谷川さんのスライド[^tomzoh-slide]を参考にすると無難だと思います。
 
-<ins>[speakerdeck.com/tomzoh/how-to-hack-the-cfp](https://speakerdeck.com/tomzoh/how-to-hack-the-cfp)</ins>
+[^tomzoh-slide]:
+    カンファレンス主催者から見た プロポーザルを通すコツ / How to hack the CfP - Speaker Deck |
+    https://speakerdeck.com/tomzoh/how-to-hack-the-cfp
 
 私のタイトルの決め方
 
@@ -87,10 +99,17 @@ LT のような短時間で発表する場合、テーマを絞った方がい�
 
 以下のスライドを見て真似するのもいいと思います。
 
-PHPerKaigi2019 スライドまとめ |
-<ins>[qiita.com/ucan-lab/items/eb66ae31d4859e967fa5](https://qiita.com/ucan-lab/items/eb66ae31d4859e967fa5)</ins>
+- PHPerKaigi2019 スライドまとめ[^phperkaigi-matome]
 
-iOSDC 2023 セッション資料まとめ | <ins>[qiita.com/yuukiw00w/items/4a8c67a21618fd4626fc](https://qiita.com/yuukiw00w/items/4a8c67a21618fd4626fc)</ins>
+[^phperkaigi-matome]:
+    PHPerKaigi2019 スライドまとめ #PHP - Qiita |
+    https://qiita.com/ucan-lab/items/eb66ae31d4859e967fa5
+
+- iOSDC 2023 セッション資料まとめ[^iosdc-matome]
+
+[^iosdc-matome]:
+    iOSDC 2023 セッション資料まとめ #Swift - Qiita |
+    https://qiita.com/yuukiw00w/items/4a8c67a21618fd4626fc
 
 ## よくある質問
 
@@ -100,27 +119,37 @@ iOSDC 2023 セッション資料まとめ | <ins>[qiita.com/yuukiw00w/items/4a8c
 
 スライドの枚数は話す量や情報量で変わりますが、5 分の LT の場合はスライド 20 枚ぐらいあると丁度いいかもしれないです。(個人の感想)個人差があるので、ブツブツ話しながら１人でリハーサルをすることをおすすめします。時間を計りながらリハーサルをしてスライドの文字数を調整したり、話す内容を調整して発表時間を調整しましょう。
 
-### スライドの作り方(一番の大変かも)
+### スライドの作り方
 
-#### Google Slides
+#### Google Slides[^google-slides]
+
+[^google-slides]:
+    Google Slides: オンライン スライドショー作成ツール | Google Workspace |
+    https://www.google.com/intl/ja_jp/slides/about/
 
 私はよく使っています。URL を共有しておけば、自分の PC がなくても発表できます。
 
-#### Microsoft PowerPoint
+#### Microsoft PowerPoint[^microsoft-powerpoint]
 
-<ins>[www.microsoft.com/ja-jp/microsoft-365/powerpoint](https://www.microsoft.com/ja-jp/microsoft-365/powerpoint)</ins>
+[^microsoft-powerpoint]:
+    Microsoft PowerPoint スライド プレゼンテーション ソフトウェア | Microsoft 365 |
+    https://www.microsoft.com/ja-jp/microsoft-365/powerpoint
 
 安定のツール。便利。
 
-#### Canva
+#### Canva[^canva]
 
-<ins>[www.canva.com/ja_jp/features/ai-slide/](https://www.canva.com/ja_jp/features/ai-slide/)</ins>
+[^canva]:
+    AI スライドでプレゼンテーション資料を作成 | Canva
+    | https://www.canva.com/ja_jp/features/ai-slide/
 
 AI にスライドを作ってもらうことができます。AI 機能を使わなくても、綺麗なデザインで作ることができます。
 
-#### revealjs
+#### revealjs[^revealjs]
 
-<ins>[revealjs.com](https://revealjs.com/)</ins>
+[^revealjs]:
+    The HTML presentation framework | reveal.js
+    | https://revealjs.com/
 
 エンジニアらしく、マークダウンでスライドを作成できます。使っている方をたまに見かけます。
 
@@ -149,21 +178,26 @@ AI にスライドを作ってもらうことができます。AI 機能を使�
 
 ### 行動規範を読もう、守ろう
 
-「行動規範」(code of conduct)に違反するような発表を行うことは許されません。参加者の行動規範に違反するような言動も許されません。「ハラスメント」「性的な発言」「容姿に関する発言」など参加者を不快にさせる言動はしないようにしましょう。スライド内でも扱ってはいけません。以下の行動規範は YUMEMI.grow の行動規範です。LT をしに参加した勉強会や LT 会でも明記されていると思います。勉強会に参加する際は必ず守りましょう。
+「行動規範」(code of conduct)に違反するような発表を行うことは許されません。参加者の行動規範に違反するような言動も許されません。「ハラスメント」「性的な発言」「容姿に関する発言」など参加者を不快にさせる言動はしないようにしましょう。スライド内でも扱ってはいけません。
+参考に以下の行動規範は株式会社ゆめみ有志が運営する勉強会 YUMEMI.grow の行動規範です。LT をしに参加した勉強会や LT 会でも明記されていると思います。勉強会に参加する際は必ず守りましょう。
 
 > YUMEMI.grow はすべての参加者が歓迎され、安全で成長できる場であることを目指しています。その実現のため、他の参加者が不快に感じる行為を禁止します。すべての参加者にとって成長機会となるよう、敬意と優しさをもって行動してください。 もし、ハラスメント行為、差別行為、勧誘行為など、疑わしい行動または破壊的な行動について気になることがございましたら、イベント主催までお知らせください。主催の判断により、該当者の退室、参加の拒否など対応を求め実行します。
 
 引用元 : <cite>YUMEMI.grow 行動規範 https://yumemi.connpass.com/event/310541/</cite>
 
-## 終わりに
+## LT をしに勉強会に参加しよう
 
-社外の LT 会でも、マサカリが飛んでくることはあまりありません。(個人的な感想)発表は他者に伝えるためでもありますが、「自身が学ぶため」でもあります。発表やアウトプット、言語化することで未知ことを把握することができたり、理解が浅いということを知ることができます。定期的に言語化することは「あなた自身の学び」になります。
+connpass[^connpass] というサイトで「LT」と検索し、参加してみましょう！最初は視聴者でも参加すると楽しいと思います！参加しているうちに「LT したい…」と思うはずです。
 
-<ins>[connpass.com](https://connpass.com/)</ins>
+[^connpass]:
+    connpass - エンジニアをつなぐ IT 勉強会支援プラットフォーム |
+    https://connpass.com/
 
-connpass というサイトで「LT」と検索し、参加してみましょう！最初は視聴者でも参加すると楽しいと思います！参加しているうちに「LT したい…」と思うはずです。
+## 最後に
 
-## SHIROBAKO の杉江さんの言葉
+社外の LT 会でも、マサカリが飛んでくることはあまりありません。（個人的な感想）発表は他者に伝えるためでもありますが、「自身が学ぶため」でもあります。発表やアウトプット、言語化することで未知ことを把握することができたり、理解が浅いということを知ることができます。定期的に言語化することは「あなた自身の学び」になります。
+
+最後まで読んでくださった皆様に、私が好きなアニメの言葉を紹介します。
 
 > 「僕は才能って言うのは、何よりまずチャンスをつかむ握力と失敗から学べる冷静さだと思う。絵の上手い下手は、その次だ」
 
@@ -171,6 +205,6 @@ connpass というサイトで「LT」と検索し、参加してみましょう
 
 引用元 : <cite>TV アニメ「SHIROBAKO」22 話</cite>
 
-武蔵野アニメーション所属の最古参のアニメーターの言葉です。いい言葉ですね。
+作品の完成を目指して奮闘するアニメーション業界の日常を描く「SHIROBAKO」というアニメの登場人物の言葉です。この言葉は、最古参のアニメーターが新人アニメーターに掛けた言葉です。
 
-SHIROBAKO はいい話なので観てください。私は「<ins>[今井みどり](http://shirobako-anime.com/character-05.html)</ins>」が好きっす！
+SHIROBAKO はいい話なので観てください。私は「今井みどり」が好きっす！

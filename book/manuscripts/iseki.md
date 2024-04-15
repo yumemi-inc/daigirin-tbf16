@@ -46,14 +46,36 @@ TextField(
 - 小数点は、1 回までの入力にしたい
   - 例）1.01.0 や 1.0.0.1.3...4 などは変換するうえで不正な値になるから避けたい。
 
-では実装した内容をご紹介します。
+### 実装するまでの道のり
+
+```dart
+TextInputType.numberWithOptions(decimal: true),
+```
+- `TextInputType.numberWithOptions`の`decimal`を true にすることで、小数点も使用することができるようにします。
+
+```dart
+  inputFormatters: <TextInputFormatter>[
+    FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d*)?')),
+  ],
+```
+
+- 小数点の入力の制限をするには、先頭が数字であり、その後には小数点とそれに続く数字が続く形式の入力が許可すればうまくいきます。それを実現するためには正規表現を活用することだと考えています。正規表現は、特定のパターンに一致するテキストを検索したり、変更したりするための強力なツールです。
+  - `^`・・・文字列の先頭からマッチすることを指定します。
+  - `\d+`・・・1つ以上の数字にマッチします。
+  - `(\.\d*)?`・・・小数点とそれに続く0個以上の数字の組み合わせにマッチします。
+
+
+|                       iOS                        |                       Android                        |
+| :----------------------------------------------: | :--------------------------------------------------: |
+| <img src="./images_iseki/iOS2.png" width="100%"> | <img src="./images_iseki/Android2.png" width="100%"> |
+
+
+### ソースコード
 
 ```dart
 TextField(
-  keyboardType: TextInputType.numberWithOptions(decimal: true),
+  keyboardType: const TextInputType.numberWithOptions(decimal: true),
   inputFormatters: <TextInputFormatter>[
-    // 先頭が数字で始まる
-    // 数字の後には、0個以上の小数点とそれに続く数字が続く
     FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d*)?')),
   ],
 )

@@ -324,6 +324,10 @@ fn view(app: &App, model: &Model, frame: Frame) {
 
 本記事で紹介したサンプルコードは GitHub リポジトリで公開しています。
 
+```url
+https://github.com/usami-k/daigirin-nannou-2
+```
+
 ## Qiita 記事の案内
 
 本記事は Qiita でも読むことができます。

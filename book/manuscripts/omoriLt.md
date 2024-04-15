@@ -1,6 +1,8 @@
----
-class: content
----
+<!-- textlint-disable ja-technical-writing/no-exclamation-question-mark -->
+
+<!-- textlint-disable ja-technical-writing/ja-no-weak-phrase -->
+
+## class: content
 
 <div class="doc-header">
   <h1>読むとLTがしたくてたまらなくなるマニュアル</h1>

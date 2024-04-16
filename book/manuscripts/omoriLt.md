@@ -2,7 +2,9 @@
 
 <!-- textlint-disable ja-technical-writing/ja-no-weak-phrase -->
 
-## class: content
+---
+class: content
+---
 
 <div class="doc-header">
   <h1>読むとLTがしたくてたまらなくなるマニュアル</h1>

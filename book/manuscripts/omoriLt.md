@@ -1,7 +1,3 @@
-<!-- textlint-disable ja-technical-writing/no-exclamation-question-mark -->
-
-<!-- textlint-disable ja-technical-writing/ja-no-weak-phrase -->
-
 ---
 class: content
 ---

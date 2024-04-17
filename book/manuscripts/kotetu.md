@@ -53,7 +53,7 @@ class: content
 
 筆者も手元で動かしてみたいと思い、発表で紹介されていたサンプルコード[^6]を Clone してビルドしようとしましたが、これが一筋縄ではいきませんでした。
 
-最も難しいのは Swift Package Manager を修正してビルドするところでしたが、それ以外にもいくつかハマりどころがありました。 Swift コンパイラへ普段から Contribute している方であればそこまでハマらないだろう箇所に初心者の筆者は様々な箇所でハマり込んでしまいました。
+最も難しいのは Swift Package Manager (以後、**SwiftPM**) を修正してビルドするところでしたが、それ以外にもいくつかハマりどころがありました。 Swift コンパイラへ普段から Contribute している方であればそこまでハマらないだろう箇所に初心者の筆者は様々な箇所でハマり込んでしまいました。
 
 そんな悪戦苦闘を記録に残すことで、これから筆者と同様に Playdate や Embedded Swift に興味を持った方が少しでもスタートラインに立つことができるようなるかもしれない、と思い立ったことが本稿を執筆しようと思ったきっかけです。
 
@@ -67,7 +67,7 @@ class: content
 
 ![エミュレータでサンプルアプリを動作させる](./images_kotetu/running-in-emulator.png "エミュレータでサンプルアプリを動作させる")
 
-また、Swift Package Manager の修正については、Swift コンパイラをビルドする手順が解説されていることから、これから Swift コンパイラへ Contribute しようという方にとっても有用な内容となっています。
+また、 SwiftPM の修正については、Swift コンパイラをビルドする手順が解説されていることから、これから Swift コンパイラへ Contribute しようという方にとっても有用な内容となっています。
 
 なお、本稿では macOS を用いてビルドを行っています。 Linux や Windows 環境でビルドを行う場合は、ダウンロードする Snapshot や 一部設定が異なります。
 
@@ -82,8 +82,8 @@ swift-playdate リポジトリをビルドするためには、 README.md に記
 3. swift-playdate リポジトリを Clone する
 4. build.sh を編集する
 5. playdate-ld を編集する
-6. Swift Package Manager を修正してビルドする
-7. 修正した Swift Package Manager が含まれる Swift の Toolchain をインストールする
+6. SwiftPM を修正してビルドする
+7. 修正した SwiftPM が含まれる Swift の Toolchain をインストールする
 8. build.sh を実行してビルドする
 
 "1. Trunk Development の snapshot をインストールする" と "2. Playdate SDK をインストールする" については、"Swift Playdate Examples" というドキュメントのチュートリアル[^7]でスクリーンショット付きで詳しく解説されているため、本稿の解説を読み飛ばすことも可能です。
@@ -139,7 +139,7 @@ cd swift-playdate/Examles
 実行すると、早々に下記の様なエラーが出力されるはずです。
 
 ```shell
-./build.sh                                                                                      main
+./build.sh
 + export TOOLCHAINS=org.swift.59202403011a
 + TOOLCHAINS=org.swift.59202403011a
 + swift-build --product Example --experimental-swift-sdk playdate -c release
@@ -164,9 +164,9 @@ swift-playdate リポジトリの README.md には、
 
 ### 5. playdate-ld を編集する
 
-### 6. Swift Package Manager を修正してビルドする
+### 6. SwiftPM を修正してビルドする
 
-### 7. 修正した Swift Package Manager が含まれる Swift の Toolchain をインストールする
+### 7. 修正した SwiftPM が含まれる Swift の Toolchain をインストールする
 
 ### 8. build.sh を実行してビルドする
 

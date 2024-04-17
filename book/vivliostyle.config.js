@@ -13,9 +13,9 @@ module.exports = {
     // はじめに
     'preface.md',
     // 各章の原稿
+    'omoriLt.md',
     'emoto.md',
     'usami.md',
-
     // 著者紹介
     'authors.md',
     'iseki.md',

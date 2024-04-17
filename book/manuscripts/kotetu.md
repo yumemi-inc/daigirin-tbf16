@@ -53,11 +53,12 @@ class: content
 
 筆者も手元で動かしてみたいと思い、発表で紹介されていたサンプルコード[^6]を Clone してビルドしようとしましたが、これが一筋縄ではいきませんでした。
 
-最も難しいのは Swift Package Manager (以後、**SwiftPM**) を修正してビルドするところでしたが、それ以外にもいくつかハマりどころがありました。 Swift コンパイラへ普段から Contribute している方であればそこまでハマらないだろう箇所に初心者の筆者は様々な箇所でハマり込んでしまいました。
+最も難しいのは Swift Package Manager (以後、**SwiftPM**) [^7] を修正してビルドするところでしたが、それ以外にもいくつかハマりどころがありました。 Swift コンパイラへ普段から Contribute している方であればそこまでハマらないだろう箇所に初心者の筆者は様々な箇所でハマり込んでしまいました。
 
 そんな悪戦苦闘を記録に残すことで、これから筆者と同様に Playdate や Embedded Swift に興味を持った方が少しでもスタートラインに立つことができるようなるかもしれない、と思い立ったことが本稿を執筆しようと思ったきっかけです。
 
 [^6]: https://github.com/kateinoigakukun/swift-playdate
+[^7]: https://github.com/apple/swift-package-manager
 
 ### 本稿の目的と対象読者
 
@@ -77,7 +78,7 @@ class: content
 
 swift-playdate リポジトリをビルドするためには、 README.md に記載されている手順を実行するための下準備が必要です。下準備も含めて、実施しないといけない手順は次のとおりです。
 
-1. Trunk Development の snapshot をインストールする
+1. Trunk Development の Snapshot をインストールする
 2. Playdate SDK をインストールする
 3. swift-playdate リポジトリを Clone する
 4. build.sh を編集する
@@ -86,17 +87,23 @@ swift-playdate リポジトリをビルドするためには、 README.md に記
 7. 修正した SwiftPM が含まれる Swift の Toolchain をインストールする
 8. build.sh を実行してビルドする
 
-"1. Trunk Development の snapshot をインストールする" と "2. Playdate SDK をインストールする" については、"Swift Playdate Examples" というドキュメントのチュートリアル[^7]でスクリーンショット付きで詳しく解説されているため、本稿の解説を読み飛ばすことも可能です。
+"1. Trunk Development の Snapshot をインストールする" と "2. Playdate SDK をインストールする" については、"Swift Playdate Examples" というドキュメントのチュートリアル[^8]でスクリーンショット付きで詳しく解説されているため、本稿の解説を読み飛ばすことも可能です。
 
-[^7]: https://apple.github.io/swift-playdate-examples/documentation/playdate/downloadingthetools/
+[^8]: https://apple.github.io/swift-playdate-examples/documentation/playdate/downloadingthetools/
 
-### 1. Trunk Development の snapshot をインストールする
+### 1. Trunk Development の Snapshot をインストールする
 
-まずは、ビルドに必要な Swift をダウンロードします。 Playdate 用のアプリをはじめとする組み込み機器向けの機能は Experimental (実験的)な機能となるため、 Xcode に含まれる Swift の Toolchain ではビルドすることができません。Experimental な機能が使用可能な Swift の Toolchain は **https://www.swift.org/download/#snapshots** からダウンロードすることができます。今回は **Trunk Development (main)** と記載された Snapshot を使用します。
+まずは、ビルドに必要な Swift のツール一式 (Toolchain) をダウンロードします。 Playdate 用のアプリをはじめとする組み込み機器向けの機能は Experimental (実験的)な機能となるため、 Xcode に含まれる Swift の Toolchain ではビルドすることができません。Experimental な機能が使用可能な Swift の Toolchain は **https://www.swift.org/download/#snapshots** からダウンロードすることができます。今回は **Trunk Development (main)** と記載された開発中の Toolchain の Snapshot を使用します。
 
-macOS でビルドを行う場合は Xcode と記載された行のリンク先から.pkgファイルをダウンロードします。ダウンロードが完了したら、画面の指示に従ってインストールを行ないます。基本的には画面の指示に従ってインストールを進めれば問題なくインストールできるはずですが、"インストール先の選択" において "このコンピュータのすべてのユーザ用にインストール" を選ぶか "自分専用にインストール" を選ぶかでインストール先が異なる点に注意が必要です。後の手順で、インストール先のToolchainの内容を調べてる必要があるため、この時にどちらを選択したかについては覚えておいてください。
+macOS でビルドを行う場合は Xcode と記載された行のリンク先から .pkg ファイルをダウンロードします。ダウンロードが完了したら、画面の指示に従ってインストールを行ないます。基本的には画面の指示に従ってインストールを進めれば問題なくインストールできるはずですが、"インストール先の選択" において "このコンピュータのすべてのユーザ用にインストール" を選ぶか "自分専用にインストール" を選ぶかでインストール先が異なる点に注意が必要です。"このコンピュータのすべてのユーザ用にインストール" を選んだ場合は `/Library/Developer/Toolchains` にインストールされ、  "自分専用にインストール" を選んだ場合は `$HOME/Library/Developer/Toolchains` にインストールされます。
 
-インストールが完了したら、 Toolchain 一式がローカルにインストールされます。"このコンピュータのすべてのユーザ用にインストール" を選んだ場合は `/Library/Developer/Toolchains` にインストールされ、  "自分専用にインストール" を選んだ場合は `$HOME/Library/Developer/Toolchains` にインストールされます。
+例えば筆者の場合、インストールしたのは `swift-DEVELOPMENT-SNAPSHOT-2024-04-04-a` というバージョンでした。また、インストール時は "このコンピュータのすべてのユーザ用にインストール" を選択してインストールしました。従って、インストール先は 
+
+```
+/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2024-04-04-a.xctoolchain
+```
+
+となります。
 
 ### 2. Playdate SDK をインストールする
 
@@ -146,7 +153,7 @@ cd swift-playdate/Examles
 ./build.sh: line 7: swift-build: command not found
 ```
 
-"swift-build: command not found" と出力されていることがわかるはずです。1. の手順で Toolchain をインストールしたはずなのに、 swift-build コマンドが見つからないのはなぜでしょう？
+"swift-build: command not found" と出力されていることがわかるはずです。1. で Toolchain をインストールしたはずなのに、 swift-build コマンドが見つからないのはなぜでしょう？
 
 実は、 build.sh の `export TOOLCHAINS=org.swift.59202403011a` という設定に秘密があります。 **TOOLCHAINS** は環境変数の一種で、利用する Toolchain を切り替えるために利用されます。 "org.swift.59202403011a" という文字列は、各 Toolchain 直下にある Info.plist 内の `CFBundleIdentifier` に記載されている ID のことです。よって、 TOOLCHAINS には、利用したい Toolchain の CFBundleIdentifier を指定する必要があります。
 

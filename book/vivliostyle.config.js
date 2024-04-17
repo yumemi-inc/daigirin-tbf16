@@ -18,6 +18,7 @@ module.exports = {
 
     // 著者紹介
     'authors.md',
+    'iseki.md',
     // 奥付
     'colophon.md'
   ],

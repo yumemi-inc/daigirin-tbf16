@@ -153,7 +153,22 @@ cd swift-playdate/Examles
 ./build.sh: line 7: swift-build: command not found
 ```
 
-"swift-build: command not found" と出力されていることがわかるはずです。1. で Toolchain をインストールしたはずなのに、 swift-build コマンドが見つからないのはなぜでしょう？
+"swift-build: command not found" と出力されていることがわかるはずです。**1.** で Toolchain をインストールしたはずなのに、 swift-build コマンドが見つからないのはなぜでしょう？
+
+#### swift-build コマンドと swift コマンド
+
+`swift-build` コマンドは、package.swift に記載されている内容に従って依存関係を解決しながらビルドを行うコマンドです。 実は、macOS 上の Swift Toolchain においては、 `swift-build` コマンドは `swift-package` のエイリアス(Windows で言うショートカットのようなもの)となっており、名前のとおり SwiftPM のモジュールの一つです。 `swift-build` は、 **1.** でインストールした `.xctoolchain` 内の `/usr/bin` ディレクトリに存在します。従って、環境変数 PATH に `swift-build` コマンドへの Path を追加することで、コマンドが見つからない問題は解決できそうです。
+
+#### swift build コマンド と swift-build の関係性
+
+`swift-build` コマンドを直接呼び出すことはほとんどなく、大抵は `swift build` コマンドとして間接的に呼び出されることが多いのではないでしょうか。`swift-build` コマンドは  `swift-package` のエイリアスになっているという話をしましたが、実は　`swift` コマンドも `swift-driver` コマンドのエイリアスとなっています[^9]。
+
+ `swift-driver` コマンドは、ユーザーからの入力を受け取って適切なコマンドを呼び出すためのプログラムです。
+
+Swift に限らず、言語処理系はソースコードをビルドして実行可能バイナリを生成するまでの間に複数のプログラムを呼び出して処理を行うことが多く、 `swift-driver` コマンドは、ユーザーとのインタフェースや、ユーザーの入力に基づいてコンパイルプロセスを制御する役割を担っています。
+
+[^9]: 同様に `swiftc` コマンドも `swift-driver` コマンドのエイリアスになっています。
+
 
 実は、 build.sh の `export TOOLCHAINS=org.swift.59202403011a` という設定に秘密があります。 **TOOLCHAINS** は環境変数の一種で、利用する Toolchain を切り替えるために利用されます。 "org.swift.59202403011a" という文字列は、各 Toolchain 直下にある Info.plist 内の `CFBundleIdentifier` に記載されている ID のことです。よって、 TOOLCHAINS には、利用したい Toolchain の CFBundleIdentifier を指定する必要があります。
 

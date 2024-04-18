@@ -16,6 +16,7 @@ module.exports = {
     'omoriLt.md',
     'emoto.md',
     'usami.md',
+    'kawashima.md',
     // 著者紹介
     'authors.md',
     'iseki.md',

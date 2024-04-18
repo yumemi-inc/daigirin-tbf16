@@ -24,7 +24,7 @@ https://zenn.dev/yumemi_inc/articles/signing-commit-basics
 
 ## はじめに
 
-本記事では、署名をすることにどういった効果があるのか掘り下げています。読者がどういった署名を採用するかの判断基準が得られることを目標にします。この記事の執筆にあたり GitHub 上でのコミットの見え方を検証するリポジトリを作成して公開しています。
+本記事では、コミットに署名をすることにどういった効果があるのか掘り下げています。読者がどういった署名を採用するかの判断基準が得られることを目標にします。この記事の執筆にあたり GitHub 上でのコミットの見え方を検証するリポジトリを作成して公開しています。
 
 <img alt="検証リポジトリへの QR コード" style="float:right;margin-left:16px" width="80" src="./images_kawashima/qrcode-github.png">
 
@@ -34,11 +34,11 @@ https://zenn.dev/yumemi_inc/articles/signing-commit-basics
 
 ### 扱わないこと
 
-本記事では、署名の具体的な方法については触れません。署名の具体的な方法が知りたい場合は、別の記事で触れているので、そちらを参考記事として紹介します。記事の中で紹介している GitHub のドキュメントが充実していて、わかりやすいです。
+本記事では、コミットに署名する具体的な方法については触れません。具体的な方法が知りたい場合は、別の記事で触れているので、そちらを参考記事として紹介します。記事の中で紹介している GitHub のドキュメントが充実していて、わかりやすいです。
 
 下記 URL または QR コードから記事にアクセスできます。
 
-<img alt="記事への QR コード" style="float:right;margin-left:16px" width="80" src="./images_kawashima/qrcode-zenn-method.png">
+<img alt="参考記事への QR コード" style="float:right;margin-left:16px" width="80" src="./images_kawashima/qrcode-zenn-method.png">
 
 - https://zenn.dev/yumemi_inc/articles/signed-commit
 

@@ -13,11 +13,12 @@ module.exports = {
     // はじめに
     'preface.md',
     // 各章の原稿
-
-    // 会社紹介（必要なら以下をアンコメントして利用、掲載時は頒布イベントの出展要項に注意）
-    // 'yumemi.md',
+    'omoriLt.md',
+    'emoto.md',
+    'usami.md',
     // 著者紹介
     'authors.md',
+    'iseki.md',
     // 奥付
     'colophon.md'
   ],

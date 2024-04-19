@@ -16,6 +16,7 @@ module.exports = {
     'omoriLt.md',
     'emoto.md',
     'usami.md',
+    'kawashima.md',
     'iseki.md',
     'hajimism-feedback-philosophy.md',
     // 著者紹介

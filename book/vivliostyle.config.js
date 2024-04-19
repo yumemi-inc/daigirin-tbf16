@@ -1,28 +1,33 @@
 module.exports = {
-  title: "ゆめみ大技林 " /*\'23'*/,
-  author: "ゆめみ大技林製作委員会",
-  language: "ja",
-  size: "A5",
-  theme: ["vivliostyle-theme-macneko-techbook", "theme/theme.css"],
+  title: 'ゆめみ大技林 '/*\'23'*/,
+  author: 'ゆめみ大技林製作委員会',
+  language: 'ja',
+  size: 'A5',
+  theme: [
+    'vivliostyle-theme-macneko-techbook',
+    'theme/theme.css'
+  ],
   entry: [
     // 目次
-    "index.md",
+    'index.md',
     // はじめに
-    "preface.md",
+    'preface.md',
     // 各章の原稿
-    "omoriLt.md",
-    "emoto.md",
-    "usami.md",
-    "iseki.md",
+    'omoriLt.md',
+    'emoto.md',
+    'usami.md',
+    'iseki.md',
     "hajimism-feedback-philosophy.md",
     // 著者紹介
-    "authors.md",
+    'authors.md',
     // 奥付
-    "colophon.md",
+    'colophon.md'
   ],
-  entryContext: "./manuscripts",
-  output: ["output/ebook.pdf"],
-  workspaceDir: ".vivliostyle",
+  entryContext: './manuscripts',
+  output: [
+    'output/ebook.pdf',
+  ],
+  workspaceDir: '.vivliostyle',
   toc: false,
   cover: undefined,
-};
+}

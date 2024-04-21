@@ -295,7 +295,7 @@ case .win32:
 case .wasi:
     return ".wasm"
 default:
-    return ".so"  // NOTE: 修正したコード
+    return ".so"  // 修正を入れた箇所
 }
 ```
 
@@ -343,7 +343,7 @@ playdate
 
 #### playdate モジュールと playdate-ld
 
-playdate モジュールは、Swift のコードをコンパイルした後に Playdate 用の実行可能バイナリを生成する処理が含まれています。ファイル一式は `SwiftSDKs/Playdate.artifactbundle/` に全て含まれており、playdate-ld というシェルスクリプトファイル以外は Artifact bundle 用の設定ファイルとなります。
+playdate モジュールは、Swift のコードをコンパイルした後に Playdate 用の実行可能バイナリを生成する処理が含まれています。ファイル一式はswift-playdateリポジトリの `SwiftSDKs/Playdate.artifactbundle/` に全て含まれており、playdate-ld というシェルスクリプトファイル以外は Artifact bundle 用の設定ファイルとなります。
 
 playdate-ld では、Playdate SDK の中で実行可能バイナリの生成に必要なC言語ファイルのコンパイルと、Swift コードとコンパイルされた Playdate SDK のオブジェクトとのリンクを行っています。
 
@@ -401,4 +401,6 @@ Example ディレクトリ内に `Example.pdx` が生成されていれば、ビ
 
 ## おわりに
 
-<hr class="page-break" />
+swift-playdate リポジトリのコードがビルドできるようになるまでを紹介しました。また、ビルドできるようになるまでの過程の中で、巨大な Swift の言語処理系の構成の一部を紹介することができました。本記事を通じて、 Swift の言語処理系に興味を持っていただけたら幸いです。
+
+最後になりましたが、 「小さなアプリバイナリを構築する」発表者である kateinoigakukun さんの発表がなければ、今回の記事を書くことができなかったですし、筆者自身、Swift 言語処理系の新たな可能性に気づくことができる良い機会になりました。kateinoigakukun さん、ありがとうございました。

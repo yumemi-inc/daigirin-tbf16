@@ -82,8 +82,8 @@ swift-playdate リポジトリをビルドするためには、 README.md に記
 2. Playdate SDK をインストールする
 3. swift-playdate リポジトリを Clone する
 4. build.sh を編集する
-5. playdate-ld を編集する
-6. SwiftPM を修正してビルドする
+5. SwiftPM を修正してビルドする
+6. playdate-ld を編集する
 7. 修正した SwiftPM が含まれる Swift の Toolchain をインストールする
 8. build.sh を実行してビルドする
 
@@ -146,7 +146,7 @@ cd swift-playdate/Examles
 実行すると、早々に下記の様なエラーが出力されるはずです。
 
 ```shell
-./build.sh
+$ ./build.sh
 + export TOOLCHAINS=org.swift.59202403011a
 + TOOLCHAINS=org.swift.59202403011a
 + swift-build --product Example --experimental-swift-sdk playdate -c release
@@ -161,32 +161,84 @@ cd swift-playdate/Examles
 
 #### swift build コマンド と swift-build の関係性
 
-`swift-build` コマンドを直接呼び出すことはほとんどなく、大抵は `swift build` コマンドとして間接的に呼び出されることが多いのではないでしょうか。`swift-build` コマンドは  `swift-package` のエイリアスになっているという話をしましたが、実は　`swift` コマンドも `swift-driver` コマンドのエイリアスとなっています[^9]。
+`swift-build` コマンドを直接呼び出すことはほとんどなく、大抵は `swift build` コマンドとして間接的に呼び出されることが多いのではないでしょうか。実は、`swift-build` コマンドと同じように、`swift` コマンドも `swift-driver` コマンドのエイリアスとなっています[^9]。
 
- `swift-driver` コマンドは、ユーザーからの入力を受け取って適切なコマンドを呼び出すためのプログラムです。
+`swift-driver` コマンドは、ユーザーからの入力を受け取って適切なコマンドを呼び出すためのプログラムです。
 
-Swift に限らず、言語処理系はソースコードをビルドして実行可能バイナリを生成するまでの間に複数のプログラムを呼び出して処理を行うことが多く、 `swift-driver` コマンドは、ユーザーとのインタフェースや、ユーザーの入力に基づいてコンパイルプロセスを制御する役割を担っています。
+Swift に限らず、言語処理系はソースコードをビルドして実行可能バイナリを生成するまでの間に複数のプログラムを呼び出して処理を行うことが多く、`swift-driver` コマンドは、一連のビルドプロセスの中ではユーザーとのインタフェースや、ユーザーの入力に基づいてコンパイルプロセスを制御する役割を担っています[^10]。
+
+ここまでの話をまとめると、 `swift build` コマンドを実行した場合は、エイリアスによって `swift-driver` コマンドが実行され、その中で `swift-package` コマンドが呼ばれる仕組みとなっています。
 
 [^9]: 同様に `swiftc` コマンドも `swift-driver` コマンドのエイリアスになっています。
+[^10]: C言語のコンパイラとして有名なgccも、gccコマンド自体は実際にコンパイルを行うccやldを呼び出すためのドライバー的なコマンドになっています。
 
+### 4. build.sh を編集する
 
-実は、 build.sh の `export TOOLCHAINS=org.swift.59202403011a` という設定に秘密があります。 **TOOLCHAINS** は環境変数の一種で、利用する Toolchain を切り替えるために利用されます。 "org.swift.59202403011a" という文字列は、各 Toolchain 直下にある Info.plist 内の `CFBundleIdentifier` に記載されている ID のことです。よって、 TOOLCHAINS には、利用したい Toolchain の CFBundleIdentifier を指定する必要があります。
+`swift-build` コマンドと `swift` コマンドの関係性がわかったところで、さっそく build.sh を編集してビルドできるようにしましょう。
 
-swift-playdate リポジトリの README.md には、 
+#### "swift-build: command not found"　を解決する
+
+`swift-build` コマンドを使えるようにするには、`swift-build` コマンドと同じ挙動となる `swift build` コマンドへ変更するか、`swift-build` コマンドへの Path を設定することで解消します。
+
+```shell
+swift build --product Example --experimental-swift-sdk playdate -c release
+```
+
+Path を設定する場合は、`xcrun --find .` コマンドを使って `swift-build` が含まれるディレクトリの Path を取得し、環境変数 `PATH` へ設定します。
+
+```shell
+export PATH=${PATH}:`xcrun --find .`
+```
+
+#### TOOLCHAINS 環境変数の設定を変更する
+
+build.sh には `export TOOLCHAINS=org.swift.59202403011a` という設定があります。これは **TOOLCHAINS** という環境変数の設定を行なっています。
+
+TOOLCHAINS 環境変数は、利用する Toolchain を切り替えるために使用します。 "org.swift.59202403011a" という文字列は、  **1.** でインストールした `.xctoolchain` の直下にある Info.plist 内の `CFBundleIdentifier` に記載されている ID のことです。つまり、TOOLCHAINS 環境変数には、この CFBundleIdentifier 値を設定する必要があります。
+
+swift-playdate リポジトリの README.md には
 
 ```
 1. Install swift-DEVELOPMENT-SNAPSHOT-2024-03-01-a toolchain from Swift.org
 ```
 
-という記載があります。つまり、 build.sh の TOOLCHAINS で設定されているのは、上記バージョンの Toolchain の CFBundleIdentifier 値ということになりますので、上記とは異なるバージョンを利用する場合はこの TOOLCHAINS を書き換えなければなりません[^8]。
+という記載があるので、build.sh の TOOLCHAINS で設定されている CFBundleIdentifier は、 2024-03-01 時点の Snapshot ということになります。したがって、現時点では使用したい Toolchain が指定されていないことになります。
 
-[^8]: 2024/04/14 現在、swift.org でダウンロード可能な Trunk Development (main) で最も古いバージョンは 2024/03/30 のバージョンになるため、README.md に記載されているバージョンはダウンロードできません。従って、 build.sh の TOOLCHAINS は必ず変更が必要になります。
+CFBundleIdentifier 値は、テキストエディタで Info.plist を開き、下記に記載されています (筆者がインストールした Toolchain の場合)。
 
-### 4. build.sh を編集する
+```xml
+<key>CFBundleIdentifier</key>
+<string>org.swift.59202404041a</string>
+```
 
-### 5. playdate-ld を編集する
+CFBundleIdentifier がわかったところで、 build.sh を次のように修正しましょう。
 
-### 6. SwiftPM を修正してビルドする
+```
+export TOOLCHAINS=org.swift.59202404041a
+```
+
+#### 修正した build.sh を実行する
+
+ここまで修正したところで、build.sh を再度実行してみましょう。
+
+```shell
+$ ./build.sh
++ export TOOLCHAINS=org.swift.59202404041a
++ TOOLCHAINS=org.swift.59202404041a
+++ xcrun --find .
++ export PATH=/path/to
++ PATH=/path/to
++ swift-build --product Example --experimental-swift-sdk playdate -c release
+warning: 'example': dependency 'swift-playdate' is not used by any target
+Basics/Triple+Basics.swift:150: Fatal error: Cannot create dynamic libraries for os "noneOS".
+./build.sh: line 8: 81204 Trace/BPT trap: 5       swift-build --product Example --experimental-swift-sdk playdate -c release
+```
+
+**Basics/Triple+Basics.swift** という箇所でエラーが発生しているようです。 `swift-build` コマンドは `swift-package` コマンドのエイリアスでした。よって、 `swift-package` コマンド内部でエラー終了したと考えて良さそうです。
+
+### 5. SwiftPM を修正してビルドする
+
+### 6. playdate-ld を編集する
 
 ### 7. 修正した SwiftPM が含まれる Swift の Toolchain をインストールする
 

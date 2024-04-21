@@ -374,6 +374,31 @@ playdate モジュールの入れ替えが完了したので、再度 build.sh �
 
 [^13]: https://github.com/apple/swift-evolution/blob/main/proposals/0305-swiftpm-binary-target-improvements.md
 
-## ビルド成功！
+## ビルド成功!
+
+それでは、build.sh を再度実行してみましょう。
+
+```shell
+$ ./build.sh
+...
++ swift-build --product Example --experimental-swift-sdk playdate -c release
+warning: 'example': dependency 'swift-playdate' is not used by any target
+Building for production...
+...
+[5/5] Linking Example
+Build of product 'Example' complete! (1.54s)
++ cp .build/armv7em-none-none-eabi/release/Example Source/pdex.elf
++ swift-build --product Example_Simulator -c release
+warning: 'example': dependency 'swift-playdate' is not used by any target
+Building for production...
+[5/5] Linking libExample_Simulator.dylib
+Build of product 'Example_Simulator' complete! (1.87s)
++ cp .build/arm64-apple-macosx/release/libExample_Simulator.dylib Source/pdex.dylib
++ pdc Source Example.pdx
+```
+
+Example ディレクトリ内に `Example.pdx` が生成されていれば、ビルド成功です。 `$HOME/Developer/PlaydateSDK/bin/` ディレクトリ内の `Playdate Simulator.app` という名称のアプリがエミュレータになりますので、起動して生成された Example.pdx を指定すれば、ビルドしたアプリが実行されるはずです。
 
 ## おわりに
+
+<hr class="page-break" />

@@ -11,12 +11,6 @@ class: content
 「小さなアプリバイナリを構築する」で使用したサンプルコードをビルドする
 ==
 
-<!-- Qiita用 
-:::note info
-本記事は [技術書典16](https://techbookfest.org/event/tbf16) で無料配布する同人誌「ゆめみ大技林 '24」の寄稿です。加筆や修正などがある場合はこの記事で行います。
-:::
--->
-
 ## はじめに
 
 ### "Playdate"で動作するアプリをSwiftで実装することの衝撃
@@ -84,7 +78,6 @@ swift-playdate リポジトリをビルドするためには、 README.md に記
 4. build.sh を編集する
 5. SwiftPM を修正してビルドする
 6. playdate-ld を編集する
-7. build.sh を実行してビルドする
 
 "1. Trunk Development の Snapshot をインストールする" と "2. Playdate SDK をインストールする" については、"Swift Playdate Examples" というドキュメントのチュートリアル[^8]でスクリーンショット付きで詳しく解説されているため、本稿の解説を読み飛ばすことも可能です。
 
@@ -129,15 +122,16 @@ Clone したら、 `swift-playdate` という名称のディレクトリがで�
 - Sources
   - 共通処理が含まれます。
 - SwiftSDKs/Playdate.artifactbundle
-  - Playdate 用 SDK 周りのコンパイルと Swift コードとのリンクを行うためのシェルスクリプトが含まれます。
+  - "Artifact bundle" と呼ばれる、ビルド時に利用するモジュールが含まれます。Playdate.artifactbundle は、Playdate 用 SDK 周りのコンパイルと Swift コードとのリンクを行います。
 - Package.swift
   - サンプルアプリのビルドで使用する、 Experimental 機能を有効にするための設定が含まれます。
 
 #### Examples/build.sh を実行してみる
 
-さて、ここまでの手順が終わった段階で、一度 build.sh を実行してみましょう。ターミナルで以下のコマンドを実行してください。
+さて、ここまでの手順が終わった段階で、一度 build.sh を実行してみましょう。swift-playdate リポジトリの README.md に記載されている説明に従い、ターミナルで以下のコマンドを実行します。
 
 ```shell
+swift experimental-sdk install ./SwiftSDKs/Playdate.artifactbundle
 cd swift-playdate/Examles
 ./build.sh
 ```
@@ -324,7 +318,7 @@ clang: error: ld.lld command failed with exit code 1 (use -v to see invocation)
 [1/2] Linking Example
 ```
 
-`collect2: error: ld returned 1 exit status` とある通り、今度は ld でエラー終了しています。よく見ると link_map.ld が見つからないようです。さらによく見ると link_map.ld のパスがローカルに存在しないパスになっています。よって、このパスを修正すればビルドが通りそうです。
+`collect2: error: ld returned 1 exit status` とある通り、今度は ld でエラー終了しています。よく見ると link_map.ld が見つからないようです。さらによく見ると link_map.ld のパスがローカルに存在しないパスになっています。このパスを使ってリポジトリ内を検索したところ、 `SwiftSDKs/Playdate.artifactbundle/generic/bin/playdate-ld` というシェルスクリプトファイルに辿り着きました。 playdate-ld を修正すれば、エラーも解消されそうです。
 
 [^11]: https://github.com/apple/swift-package-manager/blob/main/CONTRIBUTING.md
 
@@ -332,12 +326,54 @@ clang: error: ld.lld command failed with exit code 1 (use -v to see invocation)
 
 ### 6. playdate-ld を編集する
 
+playdate-ld を修正すれば良いことはわかりましたが、playdate-ld とはそもそもどういったものなのでしょうか。
 
+#### Artifact bundle について
 
-### 7. build.sh を実行してビルドする
+**Artifact bundle** は、SE-0305 [^13]と呼ばれる Swift のプロポーザルに端を発した機能です。例えば、Mac上でLinux向けのクロスコンパイルを行いたい場合において、特定のビルドプロセスを標準の Toolchain とは別なツールを用いてビルドしたい場合に利用することを想定されています。
 
-#### build.sh の中で何を行っているのか？
+swift-playdateリポジトリを Clone した直後に `swift experimental-sdk install ./SwiftSDKs/Playdate.artifactbundle` を実行しましたが、これはビルドに利用するArtifact bundleを事前にインストールしておくためだったのです。
 
-## (時間と紙面の都合が合えば) Swift コードについて解説
+なお、インストール済みの Artifact bundle は、 `swift experimental-sdk list` で確認できます。
+
+```shell
+$ swift experimental-sdk list
+playdate
+```
+
+#### playdate モジュールと playdate-ld
+
+playdate モジュールは、Swift のコードをコンパイルした後に Playdate 用の実行可能バイナリを生成する処理が含まれています。ファイル一式は `SwiftSDKs/Playdate.artifactbundle/` に全て含まれており、playdate-ld というシェルスクリプトファイル以外は Artifact bundle 用の設定ファイルとなります。
+
+playdate-ld では、Playdate SDK の中で実行可能バイナリの生成に必要なC言語ファイルのコンパイルと、Swift コードとコンパイルされた Playdate SDK のオブジェクトとのリンクを行っています。
+
+#### playdate モジュールを修正して再インストールする
+
+Artifact bundle と playdate-ld のことがわかったところで、playdate-ld を修正しましょう。
+
+```bash
+exec /usr/local/bin/arm-none-eabi-gcc -g3 $tmpdir/setup.o $OBJS -nostartfiles -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16 -D__FPU_USED=1 -T/Users/katei/Developer/PlaydateSDK/C_API/buildsupport/link_map.ld -Wl,--gc-sections,--no-warn-mismatch,--emit-relocs    -o $OUTFILE
+```
+
+という箇所があるので、下記のように書き換えます。
+
+```bash
+exec /usr/local/bin/arm-none-eabi-gcc -g3 $tmpdir/setup.o $OBJS -nostartfiles -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16 -D__FPU_USED=1 -T$HOME/Developer/PlaydateSDK/C_API/buildsupport/link_map.ld -Wl,--gc-sections,--no-warn-mismatch,--emit-relocs    -o $OUTFILE
+```
+
+ただ、Artifact bundle は、 `swift experimental-sdk install` を行った時点の内容が使用され続ける仕組みのため、再インストールの手続きが必要となります。アンインストールは `swift experimental-sdk remove モジュール名` になります。よって、下記のようにコマンドを実行します。
+
+```bash
+$ swift experimental-sdk remove playdate
+Swift SDK bundle at path `/path/to/Library/org.swift.swiftpm/swift-sdks/Playdate.artifactbundle` was successfully removed from the file system.
+$ swift experimental-sdk install ./SwiftSDKs/Playdate.artifactbundle 
+Swift SDK bundle at `./SwiftSDKs/Playdate.artifactbundle` successfully installed as Playdate.artifactbundle.
+```
+
+playdate モジュールの入れ替えが完了したので、再度 build.sh を実行してみましょう。
+
+[^13]: https://github.com/apple/swift-evolution/blob/main/proposals/0305-swiftpm-binary-target-improvements.md
+
+## ビルド成功！
 
 ## おわりに

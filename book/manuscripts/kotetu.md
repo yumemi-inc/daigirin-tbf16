@@ -84,8 +84,7 @@ swift-playdate リポジトリをビルドするためには、 README.md に記
 4. build.sh を編集する
 5. SwiftPM を修正してビルドする
 6. playdate-ld を編集する
-7. 修正した SwiftPM が含まれる Swift の Toolchain をインストールする
-8. build.sh を実行してビルドする
+7. build.sh を実行してビルドする
 
 "1. Trunk Development の Snapshot をインストールする" と "2. Playdate SDK をインストールする" については、"Swift Playdate Examples" というドキュメントのチュートリアル[^8]でスクリーンショット付きで詳しく解説されているため、本稿の解説を読み飛ばすことも可能です。
 
@@ -238,11 +237,104 @@ Basics/Triple+Basics.swift:150: Fatal error: Cannot create dynamic libraries for
 
 ### 5. SwiftPM を修正してビルドする
 
+SwiftPM のコードを修正しなければならないということで、 Swift Package Manager リポジトリを Clone しましょう。
+
+```shell
+git clone https://github.com/apple/swift-package-manager.git
+```
+
+Clone したら、早速ビルドしましょう。今回は TOOLCHAINS 環境変数を指定して、1. でインストールした Toolchain を使用してビルドしてみましょう。
+
+```shell
+cd swift-package-manager
+TOOLCHAINS=org.swift.59202404041a swift build
+```
+
+インストール済みの Toolchain を使用すれば、問題なくビルドできるはずです。
+
+次に、ビルドした SwiftPM を優先して呼び出すために、PATH 環境変数にビルドした SwiftPM の Path を追加しましょう。
+
+Swift Package Manager リポジトリの CONTRIBUTING.md [^11] によれば、生成されたバイナリはApple Silicon 搭載 Mac の場合は `swift-package-manager/.build/arm64-apple-macosx/debug` に生成されます。したがって、PATH 環境変数は下記の通りに変更します。
+
+```shell
+export PATH=/path/to/swift-package-manager/.build/arm64-apple-macosx/debug:${PATH}:`xcrun --find .`
+```
+
+#### Basics/Triple+Basics.swift を修正する
+
+改めてビルドエラーの内容を確認すると、150行目 で `Cannot create dynamic libraries for os "noneOS"` という Fatal Error が発生したことがわかります。というわけで、Basics/Triple+Basics.swift を確認してみたところ、下記のような実装になっていました。
+
+```swift
+/// The file extension for dynamic libraries (eg. `.dll`, `.so`, or `.dylib`)
+public var dynamicLibraryExtension: String {
+    guard let os = self.os else {
+        fatalError("Cannot create dynamic libraries unknown os.")
+    }
+
+    switch os {
+    case _ where isDarwin():
+        return ".dylib"
+    case .linux, .openbsd:
+        return ".so"
+    case .win32:
+        return ".dll"
+    case .wasi:
+        return ".wasm"
+    default:
+        fatalError("Cannot create dynamic libraries for os \"\(os)\".")
+    }
+}
+```
+
+まさに fatalError に入ってしまっていたためにエラー終了していたことがわかります。よって、このfatalError に入らないように修正すれば良さそうです。また、エラーメッセージの中に `"noneOS"` という記載があることから、追加すべき case は `.noneOS` であることがわかります。
+
+これらの情報を頼りに修正をしていくことになりますが、幸いなことに、swift-playdateリポジトリの README.md を見ると、エラーを回避するためのパッチに関する Pull Request へのリンクが紹介されていました[^12]。この Pull Request に記載されている内容を元に下記のように修正を行います。
+
+```swift
+switch os {
+case _ where isDarwin():
+    return ".dylib"
+case .linux, .openbsd:
+    return ".so"
+case .win32:
+    return ".dll"
+case .wasi:
+    return ".wasm"
+default:
+    return ".so"  // NOTE: 修正したコード
+}
+```
+
+修正が完了したら、 SwiftPM を再度ビルドしましょう。ビルドが通ったら、swift-playdate の Example に戻って、build.sh を実行してみましょう。以下のように結果が変わるはずです。
+
+```shell
+$ ./build.sh
+...
++ swift-build --product Example --experimental-swift-sdk playdate -c release
+Building for production...
+warning: 'example': dependency 'swift-playdate' is not used by any target
+warning: Could not read SDKSettings.json for SDK at: /usr/local/playdate/gcc-arm-none-eabi-9-2019-q4-major
+error: link command failed with exit code 1 (use -v to see invocation)
+...
+/var/folders/4b/__gw6lmd2cd7q3rcjcgqw0fm0000gn/T//cchgn8hw.s: Assembler messages:
+/var/folders/4b/__gw6lmd2cd7q3rcjcgqw0fm0000gn/T//cchgn8hw.s: Warning: can't open build/setup.lst: No such file or directory
+/usr/local/playdate/gcc-arm-none-eabi-9-2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/bin/ld: cannot open linker script file /Users/katei/Developer/PlaydateSDK/C_API/buildsupport/link_map.ld: No such file or directory
+collect2: error: ld returned 1 exit status
+clang: error: ld.lld command failed with exit code 1 (use -v to see invocation)
+[1/2] Linking Example
+```
+
+`collect2: error: ld returned 1 exit status` とある通り、今度は ld でエラー終了しています。よく見ると link_map.ld が見つからないようです。さらによく見ると link_map.ld のパスがローカルに存在しないパスになっています。よって、このパスを修正すればビルドが通りそうです。
+
+[^11]: https://github.com/apple/swift-package-manager/blob/main/CONTRIBUTING.md
+
+[^12]: https://github.com/apple/swift-package-manager/pull/7417
+
 ### 6. playdate-ld を編集する
 
-### 7. 修正した SwiftPM が含まれる Swift の Toolchain をインストールする
 
-### 8. build.sh を実行してビルドする
+
+### 7. build.sh を実行してビルドする
 
 #### build.sh の中で何を行っているのか？
 

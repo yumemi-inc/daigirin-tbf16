@@ -20,5 +20,6 @@ class: exclude-hashira
 <!-- 1. [栗山さん予定](.html) -->
 <!-- 1. [菅原さん予定](.html) -->
 <!-- 1. [村石さん予定](.html) -->
+1. [著者紹介](authors.html)
 
 </nav>

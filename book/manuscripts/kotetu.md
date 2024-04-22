@@ -235,7 +235,7 @@ TOOLCHAINS=org.swift.59202404041a swift build
 
 次に、ビルドした SwiftPM を優先して呼び出すために、PATH 環境変数にビルドした SwiftPM の Path を追加しましょう。
 
-Swift Package Manager リポジトリの CONTRIBUTING.md [^11]によれば、生成されたバイナリは Apple Silicon 搭載 Mac の場合は `swift-package-manager/.build/arm64-apple-macosx/debug` に生成されます。したがって、PATH 環境変数は次のように変更します。
+Swift Package Manager リポジトリの CONTRIBUTING.md [^11]によれば、生成されたバイナリは Apple Silicon 搭載 Mac の場合は `swift-package-manager/.build/arm64-apple-macosx/debug` に生成されます。したがって、PATH 環境変数は次のように変更します。なお、 `/path/to/` の部分については、ご自身の環境に合わせて変更してください。
 
 ```shell
 export PATH=/path/to/swift-package-manager/.build/arm64-apple-macosx/debug:${PATH}:`xcrun --find .`
@@ -395,3 +395,5 @@ Example ディレクトリ内に `Example.pdx` が生成されていれば、ビ
 swift-playdate リポジトリのコードがビルドできるようになるまでを紹介しました。また、ビルドできるようになるまでの過程の中で、巨大な Swift の言語処理系の構成の一部を紹介しました。本稿を通じて、Swift 言語を使用して Playdate や Embedded Swift を使った組み込みソフトウェア開発、そして Swift の処理系に興味を持っていただけたら幸いです。
 
 最後になりましたが、「小さなアプリバイナリを構築する」発表者である kateinoigakukun さんの発表がなければ、本稿を書くことができなかったですし、筆者自身、Swift の処理系の新たな可能性に気づくことができるよい機会になりました。kateinoigakukun さん、ありがとうございました。
+
+<hr class="page-break" />

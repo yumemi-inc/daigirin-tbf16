@@ -13,7 +13,7 @@ module.exports = {
     // はじめに
     'preface.md',
     // 各章の原稿
-    'omoriLt.md',
+    'omori.md',
     'emoto.md',
     'usami.md',
     'kawashima.md',

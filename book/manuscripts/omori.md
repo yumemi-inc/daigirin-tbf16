@@ -13,7 +13,7 @@ class: content
 
 株式会社ゆめみの 23 卒のサーバーサイドエンジニアです。X は[@uutan1108](https://twitter.com/uutan1108) でやってます。LT などを定期的にしています。
 
-<img width=100% src="./omori/lt_top.png">
+<img alt="一部のスライドを集めた画像" width="100%" src="./images_omori/lt_top.png">
 
 PHPerKaigi2024, PHP カンファレンス関西 2024, BuriKaigi 2024 などで LT や登壇しました。
 
@@ -208,3 +208,13 @@ connpass[^connpass] というサイトで「LT」と検索し、参加してみ�
 作品の完成を目指して奮闘するアニメーション業界の日常を描く「SHIROBAKO」というアニメの登場人物の言葉です。この言葉は、最古参のアニメーターが新人アニメーターに掛けた言葉です。
 
 SHIROBAKO はいい話なので観てください。私は「今井みどり」が好きっす！
+
+## note の案内
+
+本記事は note でも読むことができます。
+
+<div style="text-align: center;">
+  <img alt="note 記事への QR コード" width=100  src="./images_omori/qr-code.png">
+</div>
+
+https://note.com/uutan1108/n/n5512d6582368

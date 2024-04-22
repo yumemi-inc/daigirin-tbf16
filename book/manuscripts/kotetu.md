@@ -12,13 +12,13 @@ class: content
 
 ## はじめに
 
-### "Playdate"で動作するアプリをSwiftで実装することの衝撃
+### Playdate で動作するアプリを Swift で実装することの衝撃
 
-"try! Swift 2024" [^1]で発表された "小さなアプリバイナリを構築する" [^2] は、筆者にとって興味深い内容でした。
+「try! Swift Tokyo 2024」[^1]で発表された「小さなアプリバイナリを構築する」[^2]は、筆者にとって興味深い内容でした。
 
 まずはバイナリサイズを削減する目的を明示し、 Swift 言語のコンパイルプロセスを解説しながら、コンパイルプロセス中に行われる 3 種類の最適化フェーズが紹介されました。後半では、普段のアプリ開発でサイズに配慮したコードを書く方法が解説され、バイナリサイズのボトルネックを測定する方法や未使用コードの削減の重要性について紹介されました。発表は、実用的なノウハウだけでなく、 Swift のコンパイルプロセスといったディープな内容も含んだ興味深い内容でした。
 
-ただ、筆者に大きな衝撃を与えたのは、発表の終盤で取り上げられた内容でした。その内容とは、"Playdate" [^3]という、 Panic 社が販売している携帯ゲーム機上で動作するアプリを Swift を使って実装する、というものでした。
+ただ、筆者に大きな衝撃を与えたのは、発表の終盤で取り上げられた内容でした。その内容とは、「Playdate」[^3]という、 Panic 社が販売している携帯ゲーム機上で動作するアプリを Swift を使って実装する、というものでした。
 
 筆者はこれまで、組み込みデバイスや携帯ゲーム機向けのアプリケーション開発において、 Swift が使われることはまずないだろうとずっと考えてきました。組み込み向けに使われるのは今でも C/C++ が多く [^4]、組み込み機器向けの開発については、 Swift のコミュニティではあまり議論されていないものと思い込んでいました。
 
@@ -40,7 +40,7 @@ class: content
 
 筆者も手元で動かしてみたいと思い、発表で紹介されていたサンプルコード[^6]を Clone してビルドしようとしましたが、これが一筋縄ではいきませんでした。
 
-もっとも難しかったのは Swift Package Manager (以後、**SwiftPM**) [^7] を修正してビルドするところでしたが、それ以外にもいくつかハマりどころがありました。 Swift コンパイラへ普段から Contribute している方であればそこまでハマらないだろう箇所に初心者である筆者はさまざまな箇所でハマり込んでしまいました。
+もっとも難しかったのは Swift Package Manager (以後、**SwiftPM**) [^7]を修正してビルドするところでしたが、それ以外にもいくつかハマりどころがありました。 Swift コンパイラへ普段から Contribute している方であればそこまでハマらないだろう箇所に初心者である筆者はさまざまな箇所でハマり込んでしまいました。
 
 そんな悪戦苦闘を記録に残すことで、これから筆者と同様に Playdate や Embedded Swift に興味を持った方が少しでもスタートラインに立つことができるようなるかもしれない、と思い立ったことが本稿を執筆しようと思ったきっかけです。
 
@@ -49,7 +49,7 @@ class: content
 
 ### 本稿の目的と対象読者
 
-本稿では、 "小さなアプリバイナリを構築する" で紹介されたサンプルコードである kateinoigakukun/swift-playdate リポジトリ(以後、 **swift-playdate リポジトリ** と記載)を題材にしています。 swift-playdate リポジトリのコードをビルドし、 Playdate のエミュレータでビルドしたプログラムが動作するまでの手順を解説します。
+本稿では、「小さなアプリバイナリを構築する」で紹介されたサンプルコードである kateinoigakukun/swift-playdate リポジトリ(以後、 **swift-playdate リポジトリ** と記載)を題材にしています。 swift-playdate リポジトリのコードをビルドし、 Playdate のエミュレータでビルドしたプログラムが動作するまでの手順を解説します。
 
 Swift の処理系や Embedded Swift について詳しくない方でも、ビルドしてエミュレータ上でサンプルアプリを動作できる(**図1**)ような構成になっています。また、ビルドできるように修正していく過程の中で、 Swift の処理系の構成についても一部解説しています。
 
@@ -70,7 +70,7 @@ swift-playdate リポジトリをビルドするためには、 README.md に記
 5. SwiftPM を修正してビルドする
 6. playdate-ld を編集する
 
-"1. Trunk Development の Snapshot をインストールする" と "2. Playdate SDK をインストールする" については、"Swift Playdate Examples" というドキュメントのチュートリアル[^8]の中に同様の解説があります。スクリーンショット付きで詳しく解説されているため、本稿の該当する箇所の解説を読み飛ばすことも可能です。
+「1. Trunk Development の Snapshot をインストールする」と「2. Playdate SDK をインストールする」については、「Swift Playdate Examples」というドキュメントのチュートリアル[^8]の中に同様の解説があります。スクリーンショット付きで詳しく解説されているため、本稿の該当する箇所の解説を読み飛ばすことも可能です。
 
 [^8]: https://apple.github.io/swift-playdate-examples/documentation/playdate/downloadingthetools/
 
@@ -78,9 +78,9 @@ swift-playdate リポジトリをビルドするためには、 README.md に記
 
 まずは、ビルドに必要な Swift のツール一式（Toolchain）をダウンロードします。 Playdate 用のアプリをはじめとする組み込み機器向けの機能は Experimental（実験的）な機能となるため、 Xcode に含まれる Swift の Toolchain ではビルドできません。Experimental な機能が使用可能な Swift の Toolchain は **https://www.swift.org/download/#snapshots** からダウンロード可能です。今回は **Trunk Development (main)** と記載された開発中の Toolchain の Snapshot を使用します。
 
-macOS でビルドを行う場合は Xcode と記載された行のリンク先から .pkg ファイルをダウンロードします。ダウンロードが完了したら、 .pkg ファイルを開きインストールを行ないます。基本的には画面の指示にしたがってインストールを進めれば問題ないはずですが、"インストール先の選択" において "このコンピュータのすべてのユーザ用にインストール" を選ぶか "自分専用にインストール" を選ぶかでインストール先が異なる点に注意が必要です。"このコンピュータのすべてのユーザ用にインストール" を選んだ場合は `/Library/Developer/Toolchains` にインストールされ、  "自分専用にインストール" を選んだ場合は `$HOME/Library/Developer/Toolchains` にインストールされます。
+macOS でビルドを行う場合は Xcode と記載された行のリンク先から .pkg ファイルをダウンロードします。ダウンロードが完了したら、 .pkg ファイルを開きインストールを行ないます。基本的には画面の指示にしたがってインストールを進めれば問題ないはずですが、「インストール先の選択」において「このコンピュータのすべてのユーザ用にインストール」を選ぶか「自分専用にインストール」を選ぶかでインストール先が異なる点に注意が必要です。「このコンピュータのすべてのユーザ用にインストール」を選んだ場合は `/Library/Developer/Toolchains` にインストールされ、「自分専用にインストール」を選んだ場合は `$HOME/Library/Developer/Toolchains` にインストールされます。
 
-筆者の場合インストールしたのは `swift-DEVELOPMENT-SNAPSHOT-2024-04-04-a` というバージョンでした。また、インストール時は "このコンピュータのすべてのユーザ用にインストール" を選択してインストールしました。したがって、インストール先は `/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2024-04-04-a.xctoolchain` となります。
+筆者の場合インストールしたのは `swift-DEVELOPMENT-SNAPSHOT-2024-04-04-a` というバージョンでした。また、インストール時は「このコンピュータのすべてのユーザ用にインストール」を選択してインストールしました。したがって、インストール先は `/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2024-04-04-a.xctoolchain` となります。
 
 ### 2. Playdate SDK をインストールする
 
@@ -107,7 +107,7 @@ Clone したら、 `swift-playdate` という名称のディレクトリがで�
 - Sources
   - アプリの共通処理が含まれる。
 - SwiftSDKs/Playdate.artifactbundle
-  - "Artifact bundle" と呼ばれる、ビルド時に利用するモジュールが含まれる。Playdate.artifactbundle は、Playdate 用 SDK 周りのコンパイルと Swift コードとのリンクを行う。
+  - 「Artifact bundle」と呼ばれる、ビルド時に利用するモジュールが含まれる。Playdate.artifactbundle は、Playdate 用 SDK 周りのコンパイルと Swift コードとのリンクを行う。
 - Package.swift
   - サンプルアプリのビルドで使用する、 Experimental 機能を有効にするための設定が含まれる。
 
@@ -131,7 +131,7 @@ $ ./build.sh
 ./build.sh: line 7: swift-build: command not found
 ```
 
-"swift-build: command not found" と出力されていることが分かるはずです。**1.** で Toolchain をインストールしたはずなのに、 swift-build コマンドが見つからないのはなぜでしょう。
+「swift-build: command not found」と出力されていることが分かるはずです。 **1.** で Toolchain をインストールしたはずなのに、 swift-build コマンドが見つからないのはなぜでしょう。
 
 #### swift-build コマンドと swift コマンド
 
@@ -154,7 +154,7 @@ Swift に限らず、言語処理系はソースコードをビルドして実�
 
 `swift-build` コマンドと `swift` コマンドの関係性がわかったところで、さっそく build.sh を編集してビルドできるようにしましょう。
 
-#### "swift-build: command not found"　を解決する
+#### 「swift-build: command not found」を解決する
 
 `swift-build` コマンドを使えるようにするための方法はふたつあります。ひとつは `swift-build` コマンドを `swift build` コマンドへ変更すること、もうひとつは、 `swift-build` コマンドへの Path を設定することです。 `swift build` コマンドへ変更する場合は build.sh を次のように修正します。
 
@@ -172,7 +172,7 @@ export PATH=${PATH}:`xcrun --find .`
 
 build.sh には `export TOOLCHAINS=org.swift.59202403011a` という設定があります。これは **TOOLCHAINS** という環境変数の設定を行なっています。
 
-TOOLCHAINS 環境変数は、利用する Toolchain を切り替えるために使用します。 "org.swift.59202403011a" という文字列は、  **1.** でインストールした `.xctoolchain` の直下にある Info.plist 内の `CFBundleIdentifier` に記載されている ID のことです。つまり、TOOLCHAINS 環境変数には、この CFBundleIdentifier 値を設定する必要があります。
+TOOLCHAINS 環境変数は、利用する Toolchain を切り替えるために使用します。「org.swift.59202403011a」という文字列は、 **1.** でインストールした `.xctoolchain` の直下にある Info.plist 内の `CFBundleIdentifier` に記載されている ID のことです。つまり、TOOLCHAINS 環境変数には、この CFBundleIdentifier 値を設定する必要があります。
 
 swift-playdate リポジトリの README.md には次のような記載があります。
 
@@ -233,7 +233,7 @@ TOOLCHAINS=org.swift.59202404041a swift build
 
 次に、ビルドした SwiftPM を優先して呼び出すために、PATH 環境変数にビルドした SwiftPM の Path を追加しましょう。
 
-Swift Package Manager リポジトリの CONTRIBUTING.md [^11] によれば、生成されたバイナリは Apple Silicon 搭載 Mac の場合は `swift-package-manager/.build/arm64-apple-macosx/debug` に生成されます。したがって、PATH 環境変数は次のように変更します。
+Swift Package Manager リポジトリの CONTRIBUTING.md [^11]によれば、生成されたバイナリは Apple Silicon 搭載 Mac の場合は `swift-package-manager/.build/arm64-apple-macosx/debug` に生成されます。したがって、PATH 環境変数は次のように変更します。
 
 ```shell
 export PATH=/path/to/swift-package-manager/.build/arm64-apple-macosx/debug:${PATH}:`xcrun --find .`
@@ -388,4 +388,4 @@ Example ディレクトリ内に `Example.pdx` が生成されていれば、ビ
 
 swift-playdate リポジトリのコードがビルドできるようになるまでを紹介しました。また、ビルドできるようになるまでの過程の中で、巨大な Swift の言語処理系の構成の一部を紹介しました。本稿を通じて、Swift 言語を使用して Playdate や Embedded Swift を使った組み込みソフトウェア開発、そして Swift の処理系に興味を持っていただけたら幸いです。
 
-最後になりましたが、"小さなアプリバイナリを構築する"発表者である kateinoigakukun さんの発表がなければ、本稿を書くことができなかったですし、筆者自身、Swift の処理系の新たな可能性に気づくことができるよい機会になりました。kateinoigakukun さん、ありがとうございました。
+最後になりましたが、「小さなアプリバイナリを構築する」発表者である kateinoigakukun さんの発表がなければ、本稿を書くことができなかったですし、筆者自身、Swift の処理系の新たな可能性に気づくことができるよい機会になりました。kateinoigakukun さん、ありがとうございました。

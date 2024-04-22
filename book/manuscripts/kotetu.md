@@ -6,7 +6,6 @@ class: content
   <h1>「小さなアプリバイナリを構築する」で使用したサンプルコードをビルドする</h1>
   <div class="doc-author">栗山徹(kotetu/kotetuco)</div>
 </div>
-</div>
 
 「小さなアプリバイナリを構築する」で使用したサンプルコードをビルドする
 ==

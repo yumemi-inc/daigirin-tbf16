@@ -267,22 +267,30 @@ public var dynamicLibraryExtension: String {
 }
 ```
 
-まさに fatalError に入ってしまっていたためにエラー終了していたことがわかります。よって、この fatalError に入らないように修正すれば良さそうです。また、エラーメッセージの中に `"noneOS"` という記載があることから、追加すべき case は `.noneOS` であることがわかります。
+dynamicLibraryExtension は、 os という Triple.OS 型の enum 定義の内容を元に適切な拡張子を返す computed property です。
 
-これらの情報を頼りに修正をしていくことになりますが、幸いなことに、 swift-playdate リポジトリの README.md を見ると、エラーを回避するためのパッチに関する Pull Request へのリンクが紹介されていました[^12]。この Pull Request に記載されている内容を元に次のように修正します。
+Triple.OS は名前のとおり OS の種別を定義しており、 `.noneOS` は OS 無しで動作するアプリの場合に付与される種別です。 Playdate 内部には OS は搭載されていないことから、 Playdate 向けアプリは `.noneOS` が付与されることになります。
+
+しかし、 dynamicLibraryExtension の実装では `.noneOS` だった場合は default に入ってしまい、fatalError が呼ばれてビルドが途中で止まってしまう状態となっています。よって、 `.noneOS` の場合に fatalError が呼ばれないよう修正すれば良さそうです。
+
+swift-playdate リポジトリの README.md を見ると、 dynamicLibraryExtension でのエラーを回避するための修正に関する Pull Request が紹介されていました[^12]。
+
+Pull Request の中で提案されている修正は、 default の場合は fatalError を呼ばずに一律 `".so"` を返すよう修正する内容でした。ただ、本稿では `.noneOS` の場合のみ動作すればよいので、影響を局所化するため、 `.noneOS` の場合は `".so"` を返すようにしました。
+
+したがって、 dynamicLibraryExtension に対して次のような修正を入れました。
 
 ```swift
 switch os {
 case _ where isDarwin():
     return ".dylib"
-case .linux, .openbsd:
+case .linux, .openbsd, .noneOS: // 修正を入れた箇所
     return ".so"
 case .win32:
     return ".dll"
 case .wasi:
     return ".wasm"
 default:
-    return ".so"  // 修正を入れた箇所
+    fatalError("Cannot create dynamic libraries for os \"\(os)\".")
 }
 ```
 

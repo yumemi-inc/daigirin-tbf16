@@ -156,3 +156,6 @@ index 5777a22..ce3acef 100644
 <!-- textlint-disable -->
 思ったよりもつまずくところなく colima を OrbStack に差し替えることができて拍子抜けしました。OrbStack は Docker Desktop と同様に商用利用は有料なため金額的な話では colima の方が利用しやすいですが、選択肢が増えるのはいいことです。引き続きいろいろな方法を試して行こうと思います。
 <!-- textlint-enable -->
+
+<hr class="page-break"/>
+　

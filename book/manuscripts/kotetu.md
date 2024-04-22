@@ -305,7 +305,7 @@ clang: error: ld.lld command failed with exit code 1 (use -v to see invocation)
 [1/2] Linking Example
 ```
 
-`collect2: error: ld returned 1 exit status` とあるとおり、今度は ld でエラー終了しています。よく見ると link_map.ld が見つからないようです。さらによく見ると link_map.ld のパスがローカルには存在しないパスとなっています。このパスを使ってリポジトリ内を検索したところ、 `SwiftSDKs/Playdate.artifactbundle/generic/bin/playdate-ld` というシェルスクリプトファイルに辿り着きました。 playdate-ld を修正すれば、エラーも解消されそうです。
+`collect2: error: ld returned 1 exit status` とあるとおり、今度は ld でエラー終了しています。よく見ると link_map.ld が見つからないようです。さらによく見ると link_map.ld の Path がローカルには存在しない Path となっています。この Path を使ってリポジトリ内を検索したところ、 `SwiftSDKs/Playdate.artifactbundle/generic/bin/playdate-ld` というシェルスクリプトファイルが見つかりました。 playdate-ld の Path を修正すれば、エラーも解消されそうです。
 
 [^11]: https://github.com/apple/swift-package-manager/blob/main/CONTRIBUTING.md
 
@@ -338,11 +338,15 @@ playdate-ld では、 Playdate SDK の中で実行可能バイナリの生成に
 
 Artifact bundle と playdate-ld のことがわかったところで、playdate-ld を修正しましょう。
 
+playdate-ld を確認したところ、次のようなコマンドの記述が見つかりました。
+
 ```bash
 exec /usr/local/bin/arm-none-eabi-gcc -g3 $tmpdir/setup.o $OBJS -nostartfiles -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16 -D__FPU_USED=1 -T/Users/katei/Developer/PlaydateSDK/C_API/buildsupport/link_map.ld -Wl,--gc-sections,--no-warn-mismatch,--emit-relocs    -o $OUTFILE
 ```
 
-という箇所があるので、次のように書き換えます。
+`-T/Users/katei/Developer/PlaydateSDK/C_API/buildsupport/link_map.ld` で指定している link_map.ld の Path が、 katei さんのローカル環境の絶対 Path になっているため、ユーザー名が異なる環境で link_map.ld が見つからない状態になっていたようです。というわけで、 link_map.ld の Path をインストール先の環境に合わせて修正しましょう。
+
+link_map.ld は、 `PlaydateSDK/C_API/buildsupport` という記述があるとおり、 Playdate SDK に含まれるファイルのようです。 **2.** で Playdate SDK をインストールした際、インストール先が `$HOME/Developer/PlaydateSDK` になることが判明しているので、 playdate-ld は次のように修正します。
 
 ```bash
 exec /usr/local/bin/arm-none-eabi-gcc -g3 $tmpdir/setup.o $OBJS -nostartfiles -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16 -D__FPU_USED=1 -T$HOME/Developer/PlaydateSDK/C_API/buildsupport/link_map.ld -Wl,--gc-sections,--no-warn-mismatch,--emit-relocs    -o $OUTFILE

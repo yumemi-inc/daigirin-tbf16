@@ -63,20 +63,22 @@ Swift の処理系や Embedded Swift について詳しくない方でも、ビ�
 
 swift-playdate リポジトリをビルドするためには、 README.md に記載されている手順を実行するための下準備が必要です。下準備も含めて、実施しないといけない手順は次のとおりです。
 
-1. Trunk Development の Snapshot をインストールする
+1. ビルドに使用する Swift のツール一式をインストールする
 2. Playdate SDK をインストールする
 3. swift-playdate リポジトリを Clone する
 4. build.sh を編集する
 5. SwiftPM を修正してビルドする
 6. playdate-ld を編集する
 
-「1. Trunk Development の Snapshot をインストールする」と「2. Playdate SDK をインストールする」については、「Swift Playdate Examples」というドキュメントのチュートリアル[^8]の中に同様の解説があります。スクリーンショット付きで詳しく解説されているため、本稿の該当する箇所の解説を読み飛ばすことも可能です。
+「1. ビルドに使用する Swift のツール一式をインストールする」と「2. Playdate SDK をインストールする」については、「Swift Playdate Examples」というドキュメントのチュートリアル[^8]の中に同様の解説があります。スクリーンショット付きで詳しく解説されているため、本稿の該当する箇所の解説を読み飛ばすことも可能です。
 
 [^8]: https://apple.github.io/swift-playdate-examples/documentation/playdate/downloadingthetools/
 
-### 1. Trunk Development の Snapshot をインストールする
+### 1. ビルドに使用する Swift のツール一式をインストールする
 
-まずは、ビルドに必要な Swift のツール一式（Toolchain）をダウンロードします。 Playdate 用のアプリをはじめとする組み込み機器向けの機能は Experimental（実験的）な機能となるため、 Xcode に含まれる Swift の Toolchain ではビルドできません。Experimental な機能が使用可能な Swift の Toolchain は **https://www.swift.org/download/#snapshots** からダウンロード可能です。今回は **Trunk Development (main)** と記載された開発中の Toolchain の Snapshot を使用します。
+iOS アプリや macOS 向けのアプリをビルドする場合は、 Xcode のインストール時に含まれる Swift のコマンドラインツール一式（Swift のコンパイラや SwiftPM など）を使用します。この Swift のツール一式のことを **Toolchain** と呼びます。
+
+Playdate 用のアプリをはじめとする組み込み機器向けの機能は Experimental（実験的）な機能となるため、 Xcode のインストール時に含まれる Swift の Toolchain ではビルドできません。Experimental な機能が使用可能な Swift の Toolchain は **https://www.swift.org/download/#snapshots** からダウンロード可能です。今回は **Trunk Development (main)** と記載された開発中の Toolchain の Snapshot を使用します。
 
 macOS でビルドを行う場合は Xcode と記載された行のリンク先から .pkg ファイルをダウンロードします。ダウンロードが完了したら、 .pkg ファイルを開きインストールを行ないます。基本的には画面の指示にしたがってインストールを進めれば問題ないはずですが、「インストール先の選択」において「このコンピュータのすべてのユーザ用にインストール」を選ぶか「自分専用にインストール」を選ぶかでインストール先が異なる点に注意が必要です。「このコンピュータのすべてのユーザ用にインストール」を選んだ場合は `/Library/Developer/Toolchains` にインストールされ、「自分専用にインストール」を選んだ場合は `$HOME/Library/Developer/Toolchains` にインストールされます。
 

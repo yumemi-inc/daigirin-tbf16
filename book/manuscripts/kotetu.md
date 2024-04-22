@@ -55,7 +55,7 @@ Swift の処理系や Embedded Swift について詳しくない方でも、ビ�
 
 ![エミュレータでサンプルアプリを動作させる](./images_kotetu/running-in-emulator.png "エミュレータでサンプルアプリを動作させる")
 
-なお、本稿では macOS を用いてビルドを行っています。 Linux や Windows 環境でビルドを行う場合は、ダウンロードする Snapshot や手順が異なります。
+なお、本稿では macOS Sonoma 14.4.1 がインストールされた Apple シリコン搭載機種を用いてビルドを行っています。 Linux や Windows 環境でビルドを行う場合は、ダウンロードする Snapshot や手順が異なります。
 
 ## サンプルコードをビルドできるまでの全記録
 

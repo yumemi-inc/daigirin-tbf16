@@ -20,9 +20,9 @@ module.exports = {
     'omori.md',
     'hajimism-feedback-philosophy.md',
     'kawashima.md',
-    // 栗山さん予定
-    // 菅原さん予定
-    // 村石さん予定
+    'yusuga.md',
+    'kotetu.md',
+    'muraishi.md',
 
     // 著者紹介
     'authors.md',

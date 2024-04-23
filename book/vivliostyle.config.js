@@ -23,7 +23,6 @@ module.exports = {
     'kawashima.md',
     'yusuga.md',
     'kotetu.md',
-    'muraishi.md',
 
     // 著者紹介
     'authors.md',

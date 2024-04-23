@@ -17,7 +17,7 @@ module.exports = {
     'usami.md',
     'emoto.md',
     'iseki.md',
-    'omoriLt.md',
+    'omori.md',
     'hajimism-feedback-philosophy.md',
     'kawashima.md',
     // 栗山さん予定

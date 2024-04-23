@@ -12,15 +12,19 @@ module.exports = {
     'index.md',
     // はじめに
     'preface.md',
+
     // 各章の原稿
-    'omori.md',
-    'emoto.md',
     'usami.md',
-    'kawashima.md',
+    'emoto.md',
     'iseki.md',
+    'omori.md',
     'hajimism-feedback-philosophy.md',
     'muraishi.md',
+    'kawashima.md',
     'yusuga.md',
+    'kotetu.md',
+    'muraishi.md',
+
     // 著者紹介
     'authors.md',
     // 奥付

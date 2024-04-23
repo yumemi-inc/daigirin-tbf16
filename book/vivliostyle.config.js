@@ -19,6 +19,7 @@ module.exports = {
     'kawashima.md',
     'iseki.md',
     'hajimism-feedback-philosophy.md',
+    'muraishi.md',
     'yusuga.md',
     // 著者紹介
     'authors.md',

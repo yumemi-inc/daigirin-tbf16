@@ -43,7 +43,7 @@ https://note.com/shilokuma/n/n91c2beb4dcd9
 
 [^zipair]: ZIPAIR 会社概要 https://www.zipairtokyo.com/ja/company/
 
-　ZIPAIR(正式名: 株式会社ZIPAIR Tokyo) は、コロナ禍の2018年7月に設立された日本企業です。日本航空(JAL) の 100% 子会社として、北米・アジアに就航しています。
+　ZIPAIR(正式名: 株式会社ZIPAIR Tokyo) は、2018年7月に設立された日本企業です。日本航空(JAL) の 100% 子会社として、北米・アジアに就航しています。
 日本の成田空港とシリコンバレーの中心サンノゼ空港を直行便で結んでおり、
 
 | 出発空港 | 到着空港 | 運賃 (燃油込, 空港使用料及び各種諸税別) |

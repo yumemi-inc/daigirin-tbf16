@@ -7,6 +7,8 @@ class: content
   <div class="doc-author">村石拓海</div>
 </div>
 
+# AppleとGoogleに遊びに行こう！
+
 ## はじめに
 
 みなさん、旅行はお好きですか？私はどんな旅行でも大好きです。
